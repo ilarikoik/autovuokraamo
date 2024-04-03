@@ -1,0 +1,39 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>CarRental</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h3>cars</h3>
+    <table>
+
+        <tr>
+            <th>Merkki</th>
+            <th>Malli</th>
+            <th>Kilometrit</th>
+            <th>Väri</th>
+            <th>Tyyppi</th>
+            <th>Polttoaine</th>
+            <th>Hinta</th>
+            <th>Vuokrattu</th>
+        </tr>
+        <tr th:each="car : ${cars}">
+            <td th:text="${car.vehicle.brand}"></td>
+            <td th:text="${car.vehicle.model}"></td>
+            <td th:text="${car.kilometers}"></td>
+            <td th:text="${car.vehicle.color}"></td>
+            <td th:text="${car.type}"></td>
+            <td th:text="${car.fuel}"></td>
+            <td th:text="${car.price} +' €'"></td>
+            <td th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
+            <td> <a th:href="@{/editcar/{id}(id=${car.carId})}">EDIT </a> </td>
+        </tr>
+    </table> 
+    <br>
+    <br>
+    <a th:href="@{/addcar}">lisää auto</a>
+</body>
+</html>
