@@ -29,11 +29,25 @@
             <td th:text="${car.fuel}"></td>
             <td th:text="${car.price} +' €'"></td>
             <td th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
-            <td> <a th:href="@{/editcar/{id}(id=${car.carId})}">EDIT </a> </td>
+            <td> <a th:href="@{/editcar/{id}(id=${car.carId})}">EDIT </a> </td> 
+            <td> <a th:href="@{/deletecar/{id}(id=${car.carId})}">DELETE </a> </td> 
+            
+            <form th:action="@{/saverent/{id}(id=${car.carId})}" method="post">
+                <td>
+                    <button type="submit">VUOKRAA</button>
+                </td>
+            </form>
+            
         </tr>
     </table> 
     <br>
     <br>
     <a th:href="@{/addcar}">lisää auto</a>
+    <br><br>
+    <a th:href="@{/vehicles}">vehicles</a>
+    <br><br>
+    <a th:href="@{/rented}">rented Cars</a>
+    <br><br>
+    <a th:href="@{/notrented}">notrented Cars</a>
 </body>
 </html>

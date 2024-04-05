@@ -1,5 +1,6 @@
 package com.example.autovuokraamo.web;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,25 +54,47 @@ public class CarController {
     }
 
     @GetMapping("/editcar/{id}")
-    public String editManufacturer(@PathVariable("id") Long carId, Model model) {
+    public String editCar(@PathVariable("id") Long carId, Model model) {
         model.addAttribute("car", crepo.findById(carId));
         return "editcar";
     }
-    // ei toimi viel itse toiminto
-    // tää nyt tekee uude objekti aina listaa eikä päivitä sitä mitä päivitetää
-    /*
-     * @GetMapping("/editcar/{id}")
-     * public String editCar(@PathVariable("id") Long carId, Model model) {
-     * Optional<Car> etsi = crepo.findById(carId);
-     * 
-     * if (etsi.isPresent()) {
-     * model.addAttribute("car", etsi.get());
-     * return "editcar";
-     * } else {
-     * return "carslist";
-     * }
-     */
-    // muista edit linkkiin laittaa myös se /{id}(id=${car.carId})
-    /* } */
+
+    @PostMapping("/saverent/{id}")
+    public String rentCar(@PathVariable("id") Long id, Model model) {
+        Optional<Car> car = crepo.findById(id); // urlista saadaa id metodille
+        if (car.isPresent()) {
+            // jos löytyy haetaa sen tiedot ja vaihetaa rented kohta ja tallennetaa
+            Car carRented = car.get();
+            boolean rented = carRented.getRented();
+            // vaihdetaan vastakkaiseen booleaniin klikillä
+            carRented.setRented(!rented);
+            crepo.save(carRented);
+        } else {
+            System.err.println("error");
+        }
+        return "redirect:/cars";
+    }
+
+    @GetMapping("/deletecar/{id}")
+    public String deleteCar(@PathVariable("id") Long carId) {
+        crepo.deleteById(carId);
+        return "redirect:/cars";
+    }
+
+    @GetMapping("/rented")
+    public String showRentedCars(Boolean rented, Model model) {
+        List<Car> rentedList = crepo.findByRented(true);
+        model.addAttribute("rentedlist", rentedList);
+        return "rentedlist";
+
+    }
+
+    @GetMapping("/notrented")
+    public String showNotRentedCars(Boolean rented, Model model) {
+        List<Car> notRentedList = crepo.findByRented(false);
+        model.addAttribute("notrentedlist", notRentedList);
+        return "notrentedlist";
+
+    }
 
 }

@@ -31,9 +31,14 @@ public class AutovuokraamotyoApplication {
 		return (args) -> {
 
 			List<Vehicle> vehicles = Arrays.asList(
-					new Vehicle("audi", "rs6", "Blue"),
+					new Vehicle("audi", "Rs6", "Blue"),
+					new Vehicle("audi", "A5", "Gray"),
 					new Vehicle("Ford", "Transit", "Black"),
-					new Vehicle("VolksWagen", "Polo", "White"));
+					new Vehicle("VolksWagen", "Golf", "Black"),
+					new Vehicle("VolksWagen", "Polo", "White"),
+					new Vehicle("VolksWagen", "Polo", "Blue"),
+					new Vehicle("Skoda", "Fabia", "Black"),
+					new Vehicle("Skoda", "Octavia", "Red"));
 			vehicles.forEach(vehirepo::save);
 
 			List<Car> lista = new ArrayList<>();
@@ -41,6 +46,11 @@ public class AutovuokraamotyoApplication {
 			lista.add(new Car("diesel", "Pakettiauto", 13500, 110000, true, vehicles.get(1)));
 			lista.add(
 					new Car("bensa", "henkilöauto", 24999, 89000, false, vehicles.get(2)));
+			lista.add(new Car("diesel", "Viistoperä", 11500, 110000, true, vehicles.get(3)));
+			lista.add(new Car("bensa", "Viistoperä", 17500, 81300, true, vehicles.get(4)));
+			lista.add(new Car("bensa", "Viistoperä", 17500, 11983, false, vehicles.get(5)));
+			lista.add(new Car("bensa", "Farmari", 27500, 203111, true, vehicles.get(6)));
+			lista.add(new Car("bensa", "Farmari", 15500, 55321, false, vehicles.get(7)));
 
 			lista.forEach(crepo::save);
 
