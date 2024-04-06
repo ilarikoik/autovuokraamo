@@ -13,4 +13,5 @@ public interface VehicleRepository extends CrudRepository<Vehicle, Long> {
     @Query("SELECT DISTINCT v.brand FROM Vehicle v")
     Iterable<String> findAllDistinctBrands();
 
+    List<Vehicle> findByColor(String color);
 }

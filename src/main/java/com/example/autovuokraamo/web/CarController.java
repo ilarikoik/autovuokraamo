@@ -1,7 +1,14 @@
 package com.example.autovuokraamo.web;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.autovuokraamo.AutovuokraamotyoApplication;
 import com.example.autovuokraamo.domain.Car;
 import com.example.autovuokraamo.domain.CarRepository;
 import com.example.autovuokraamo.domain.Vehicle;
@@ -95,6 +103,73 @@ public class CarController {
         model.addAttribute("notrentedlist", notRentedList);
         return "notrentedlist";
 
+    }
+
+    @GetMapping("/notrented/{brand}")
+    public String showNotRentedCarsByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
+        List<Car> cars = crepo.findByRented(false);
+        List<Car> notRentedList = new ArrayList<>();
+
+        for (Car c : cars) {
+            String currentCarBrand = c.getVehicle().getBrand();
+            if (currentCarBrand.equals(brand)) {
+                notRentedList.add(c);
+            }
+        }
+
+        model.addAttribute("notrentedlist", notRentedList);
+        return "notrentedbybrand";
+
+    }
+
+    @GetMapping("/rented/{brand}")
+    public String showRentedCarsByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
+        List<Car> cars = crepo.findByRented(true);
+        List<Car> rentedList = new ArrayList<>();
+
+        for (Car c : cars) {
+            String currentCarBrand = c.getVehicle().getBrand();
+            if (currentCarBrand.equals(brand)) {
+                rentedList.add(c);
+            }
+        }
+
+        model.addAttribute("notrentedlist", rentedList);
+        return "rentedbybrand";
+
+    }
+
+    private static final Logger log = LoggerFactory.getLogger(CarController.class);
+
+    @GetMapping("/bycolor/{color}")
+    public String showByColor(@PathVariable("color") String color, Model model) {
+
+        // pitäs hakee eka sen merkin perustellaa creposta ja sitte haravoida sieltä
+        // sama värilliset
+
+        // ottaa urliin annetun color paramterin ja ettii sen nimiset värit Vehicle
+        // listasta
+        Set<String> colors = new HashSet<>();
+        for (Vehicle v : vrepo.findAll()) {
+            String VeColor = v.getColor();
+            if (VeColor.equalsIgnoreCase(color))
+                colors.add(VeColor);
+        }
+
+        List<Car> byColor = new ArrayList<>();
+        for (Car car : crepo.findAll()) {
+            // jokasta autoa kohden haetaan sen vehicle luokka ja sieltä väri
+            String c = car.getVehicle().getColor();
+            if (c.equals(color)) {
+                byColor.add(car);
+            }
+        }
+
+        // ehkä joteki tällei
+        /* List<Car> lista = crepo.findByVehicle(vrepo.findByColor(color)); */
+
+        model.addAttribute("autotiedot", byColor);
+        return "bycolor";
     }
 
 }

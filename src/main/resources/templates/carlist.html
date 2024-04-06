@@ -9,7 +9,48 @@
 <body>
     <h3>cars</h3>
     <table>
-
+        <label for="">Hae autoja värin perusteella  </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
+            <option value="">Select...</option>
+            <option value="/bycolor/Blue">Blue</option>
+            <option value="/bycolor/White">White</option>
+            <option value="/bycolor/Black">Black</option>
+        </select>
+        <br>
+        <label for="">Hae autoja merkin perusteella  </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
+            <option value="">Select...</option>
+            <option value="/info/audi">Audi</option>
+            <option value="/info/Ford">Ford</option>
+            <option value="/info/VolksWagen">VolksWagen</option>
+            <option value="/info/Skoda">Skoda</option>
+        </select>
+        <br>
+        <label for="">Hae vuokrattu/vuokraamaton  </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
+            <option value="">Select...</option>
+            <option value="/rented">vuokrattu</option>
+            <option value="/notrented">vuokraamaton</option>
+        </select>
+        <br>
+        <label for="">Vuokratut autot merkin mukaan   </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
+            <option value="">Select...</option>
+            <option value="/rented/audi">Audi</option>
+            <option value="/rented/Ford">Ford</option>
+            <option value="/rented/VolksWagen">VolksWagen</option>
+            <option value="/rented/Skoda">Skoda</option>
+        </select>
+        <br>
+        <label for="">Hae vapaana olevat autot merkin mukaan  </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
+            <option value="">Select...</option>
+            <option value="/notrented/audi">Audi</option>
+            <option value="/notrented/Ford">Ford</option>
+            <option value="/notrented/VolksWagen">VolksWagen</option>
+            <option value="/notrented/Skoda">Skoda</option>
+        </select>
+<br><br>
         <tr>
             <th>Merkki</th>
             <th>Malli</th>
@@ -20,23 +61,23 @@
             <th>Hinta</th>
             <th>Vuokrattu</th>
         </tr>
-        <tr th:each="car : ${cars}">
-            <td th:text="${car.vehicle.brand}"></td>
-            <td th:text="${car.vehicle.model}"></td>
-            <td th:text="${car.kilometers}"></td>
-            <td th:text="${car.vehicle.color}"></td>
-            <td th:text="${car.type}"></td>
-            <td th:text="${car.fuel}"></td>
-            <td th:text="${car.price} +' €'"></td>
-            <td th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
-            <td> <a th:href="@{/editcar/{id}(id=${car.carId})}">EDIT </a> </td> 
-            <td> <a th:href="@{/deletecar/{id}(id=${car.carId})}">DELETE </a> </td> 
-            
+        <tr th:each="car : ${cars}" >
+            <td style="padding: 7px;" th:text="${car.vehicle.brand}" ></td>
+            <td style="padding: 7px;" th:text="${car.vehicle.model}"></td>
+            <td style="padding: 7px;" th:text="${car.kilometers} + '`km'  "  ></td>
+            <td style="padding: 7px;" th:text="${car.vehicle.color}"></td>
+            <td style="padding: 7px;" th:text="${car.type}"></td>
+            <td style="padding: 7px;" th:text="${car.fuel}"></td>
+            <td style="padding: 7px;" th:text="${car.price} +' €'"></td>
+            <td style="padding: 7px;" th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
             <form th:action="@{/saverent/{id}(id=${car.carId})}" method="post">
                 <td>
                     <button type="submit">VUOKRAA</button>
                 </td>
             </form>
+            <td> <a th:href="@{/editcar/{id}(id=${car.carId})}">EDIT </a> </td> 
+            <td> <a th:href="@{/deletecar/{id}(id=${car.carId})}">DELETE </a> </td> 
+            
             
         </tr>
     </table> 
@@ -46,8 +87,8 @@
     <br><br>
     <a th:href="@{/vehicles}">vehicles</a>
     <br><br>
-    <a th:href="@{/rented}">rented Cars</a>
+    <!-- <a th:href="@{/rented}">rented Cars</a>
     <br><br>
-    <a th:href="@{/notrented}">notrented Cars</a>
+    <a th:href="@{/notrented}">notrented Cars</a> -->
 </body>
 </html>

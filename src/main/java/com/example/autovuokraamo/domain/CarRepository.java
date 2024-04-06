@@ -12,6 +12,10 @@ public interface CarRepository extends CrudRepository<Car, Long> {
     // loopissa
     List<Car> findByVehicle(Vehicle vehicle);
 
+    /* List<Car> findByVehicleList(List<Vehicle> list); */
+
     List<Car> findByRented(boolean b);
+
+    /* List<Car> findByColor(String color); */
 
 }

@@ -38,19 +38,27 @@ public class AutovuokraamotyoApplication {
 					new Vehicle("VolksWagen", "Polo", "White"),
 					new Vehicle("VolksWagen", "Polo", "Blue"),
 					new Vehicle("Skoda", "Fabia", "Black"),
-					new Vehicle("Skoda", "Octavia", "Red"));
+					new Vehicle("Skoda", "Octavia", "Red"),
+					new Vehicle("Ford", "Mustang", "Black"),
+					new Vehicle("Ford", "Focus", "Gray"),
+					new Vehicle("audi", "Q5", "Red"),
+					new Vehicle("audi", "A4", "Red"));
 			vehicles.forEach(vehirepo::save);
 
 			List<Car> lista = new ArrayList<>();
-			lista.add(new Car("bensa", "henkilöauto", 59999, 21000, false, vehicles.get(0)));
-			lista.add(new Car("diesel", "Pakettiauto", 13500, 110000, true, vehicles.get(1)));
+			lista.add(new Car("bensa", "auto", 59999, 21000, false, vehicles.get(0)));
+			lista.add(new Car("diesel", "auto", 13500, 110000, true, vehicles.get(1)));
 			lista.add(
-					new Car("bensa", "henkilöauto", 24999, 89000, false, vehicles.get(2)));
-			lista.add(new Car("diesel", "Viistoperä", 11500, 110000, true, vehicles.get(3)));
-			lista.add(new Car("bensa", "Viistoperä", 17500, 81300, true, vehicles.get(4)));
-			lista.add(new Car("bensa", "Viistoperä", 17500, 11983, false, vehicles.get(5)));
-			lista.add(new Car("bensa", "Farmari", 27500, 203111, true, vehicles.get(6)));
-			lista.add(new Car("bensa", "Farmari", 15500, 55321, false, vehicles.get(7)));
+					new Car("bensa", "auto", 24999, 89000, false, vehicles.get(2)));
+			lista.add(new Car("diesel", "auto", 11500, 110000, true, vehicles.get(3)));
+			lista.add(new Car("bensa", "auto", 17500, 81300, true, vehicles.get(4)));
+			lista.add(new Car("bensa", "auto", 17500, 11983, false, vehicles.get(5)));
+			lista.add(new Car("bensa", "auto", 27500, 203111, true, vehicles.get(6)));
+			lista.add(new Car("bensa", "auto", 15500, 55321, false, vehicles.get(7)));
+			lista.add(new Car("bensa", "auto", 43490, 92061, false, vehicles.get(8)));
+			lista.add(new Car("Diesel", "auto", 12750, 136000, false, vehicles.get(9)));
+			lista.add(new Car("Diesel", "auto", 7700, 360000, true, vehicles.get(10)));
+			lista.add(new Car("Diesel", "auto", 13490, 26200, true, vehicles.get(11)));
 
 			lista.forEach(crepo::save);
 
