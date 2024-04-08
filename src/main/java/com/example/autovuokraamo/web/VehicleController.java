@@ -68,6 +68,7 @@ public class VehicleController {
         }
 
         model.addAttribute("autotiedot", carslist); // lähetetää tiedot
+
         return "infos";
     }
 }

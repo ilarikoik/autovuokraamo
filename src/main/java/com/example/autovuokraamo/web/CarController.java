@@ -43,6 +43,27 @@ public class CarController {
         // vehicle tiedot löytyy myös creposta kun ne on tallennettu sinne Car olion
         // sisällä
         model.addAttribute("cars", crepo.findAll());
+
+        // lähetetää kaikki värit valintoja varte
+        List<String> colors = new ArrayList<>();
+        for (Vehicle v : vrepo.findAll()) {
+            String VehicleColor = v.getColor();
+            if (!colors.contains(VehicleColor)) {
+                colors.add(VehicleColor);
+            }
+        }
+        model.addAttribute("colorlist", colors);
+
+        // lähetetää kaikki merkit valintoja varte
+        List<String> brandit = new ArrayList<>();
+        for (Vehicle v : vrepo.findAll()) {
+            String bra = v.getBrand();
+            if (!brandit.contains(bra)) {
+                brandit.add(bra);
+            }
+        }
+        model.addAttribute("brandit", brandit);
+
         return "carlist";
     }
 

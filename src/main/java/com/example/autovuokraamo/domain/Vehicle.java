@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // automerkillä yhestä moneen suhde /*  */
 // Yhteiset tiedot kaikille autoille.. merkki
 
@@ -28,6 +30,13 @@ public class Vehicle {
         this.color = color;
     }
 
+    public Vehicle(String brand, String model, String color, Car car) {
+        this.brand = brand;
+        this.model = model;
+        this.color = color;
+    }
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "vehicle")
     private List<Car> car;
 

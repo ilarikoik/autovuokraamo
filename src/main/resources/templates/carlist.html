@@ -10,21 +10,30 @@
     <h3>cars</h3>
     <table>
         <label for="">Hae autoja värin perusteella  </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;" > 
+            <option th:each="color : ${colorlist}" th:value="${'/bycolor/' + color}" th:text="${color}"></option>
+        </select>
+
+        <!-- <label for="">Hae autoja värin perusteella  </label>
         <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
             <option value="">Select...</option>
             <option value="/bycolor/Blue">Blue</option>
             <option value="/bycolor/White">White</option>
             <option value="/bycolor/Black">Black</option>
-        </select>
+        </select> -->
         <br>
         <label for="">Hae autoja merkin perusteella  </label>
+        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
+            <option th:each="merkki : ${brandit}" th:value="${'/info/' + merkki}" th:text="${merkki}"></option>
+        </select>
+        <!-- <label for="">Hae autoja merkin perusteella  </label>
         <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
             <option value="">Select...</option>
             <option value="/info/audi">Audi</option>
             <option value="/info/Ford">Ford</option>
             <option value="/info/VolksWagen">VolksWagen</option>
             <option value="/info/Skoda">Skoda</option>
-        </select>
+        </select> -->
         <br>
         <label for="">Hae vuokrattu/vuokraamaton  </label>
         <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 

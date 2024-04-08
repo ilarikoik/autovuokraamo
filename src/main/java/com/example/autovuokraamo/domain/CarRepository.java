@@ -16,6 +16,8 @@ public interface CarRepository extends CrudRepository<Car, Long> {
 
     List<Car> findByRented(boolean b);
 
+    /* List<Car> findByVehicle(List<Vehicle> byColor); */
+
     /* List<Car> findByColor(String color); */
 
 }

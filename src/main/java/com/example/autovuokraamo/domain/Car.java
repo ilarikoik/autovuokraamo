@@ -2,6 +2,8 @@ package com.example.autovuokraamo.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,6 +27,14 @@ public class Car {
 
     // tuotteella yksi valmistaja
     // car luokka viittaa vehicle luokkaan tässä joten extends ei tarvitse käyttää?
+
+    /*
+     * JSON IGNORE piti poistaa että tää lähettää vehicle tiedot json muotoo kans ??
+     * Jos @JsonIgnore on merkitty vehicle-kenttään Car-luokassa, se tarkoittaa,
+     * että tämä kenttä jätetään pois JSON-vastauksesta aina kun Car-olioita
+     * muunnetaan JSON-muotoon.
+     */
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle")
     private Vehicle vehicle;
@@ -40,6 +50,7 @@ public class Car {
         this.kilometers = kilometers;
         this.rented = rented;
         this.vehicle = vehicle;
+
     }
 
     public long getCarId() {
@@ -100,7 +111,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "[vehicleID=" + vehicle.getId() + "] --> carId=" + carId + ", fuel=" + fuel + ", type=" + type
+        return "[vehicleBrand =" + vehicle.getBrand() + "] --> carId=" + carId + ", fuel=" + fuel + ", type=" + type
                 + ", price="
                 + price
                 + ", kilometers="
