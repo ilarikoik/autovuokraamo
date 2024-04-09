@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h3>autot merkkien perusteella</h3>
+    <h3>autot värin perusteella</h3>
     
     <table>
         <br><br>
@@ -15,7 +15,7 @@
             <tr>
                 <th>Merkki</th>
                 <th>Malli</th>
-                <th>Väri </th>
+                <th>Väri</th>
                 <th>kilometers</th>
                 <th>tyyppi</th>
                 <th>hinta</th>
@@ -26,19 +26,20 @@
         <tbody>
 
             
-            <tr th:each="car: ${autotiedot}">
-                <td th:text="${car.vehicle.brand}"></td>
-    <td th:text="${car.vehicle.model}"></td>
-    <td th:text="${car.vehicle.color}"></td>
-                <td th:text="${car.kilometers}"></td>
-                <td th:text="${car.type}"></td>
-                <td th:text="${car.price} +'€'"></td>
-                <td th:text="${car.fuel}"></td>
-                <td th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
+            <tr th:each="bike: ${bikesbycolor}">
+                <td th:text="${bike.vehicle.brand}"></td>
+                <td th:text="${bike.vehicle.model}"></td>
+                <td th:text="${bike.vehicle.color}"></td>
+                <td th:text="${bike.kilometers}"></td>
+                <td th:text="${bike.type}"></td>
+                <td th:text="${bike.price} +'€'"></td>
+                <td th:text="${bike.fuel}"></td>
+                <td th:text="${bike.rented} ? 'Kyllä' : 'Ei'"></td>
             </tr>
         </tbody>
-        
+            
     </table> 
+    
     <br>
     <br>
     <a th:href="@{/addcar}">lisää auto</a>

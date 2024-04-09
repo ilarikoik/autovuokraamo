@@ -26,44 +26,56 @@ public class CarRestController {
     @Autowired
     private VehicleRepository vrepo;
 
-    @RequestMapping(value = { ("/carsrest") }, method = RequestMethod.GET)
-    public @ResponseBody List<Vehicle> vehicleRestList() {
-        return (List<Vehicle>) vrepo.findAll();
-    }
+    /*
+     * @RequestMapping(value = { ("/carsrest") }, method = RequestMethod.GET)
+     * public @ResponseBody List<Vehicle> vehicleRestList() {
+     * return (List<Vehicle>) vrepo.findAll();
+     * }
+     */
 
-    @RequestMapping(value = { "/car" }, method = RequestMethod.GET)
-    public @ResponseBody List<Car> carRestListaaaa() {
-        List<Car> cars = (List<Car>) crepo.findAll();
-        List<Vehicle> ve = new ArrayList<>();
-        for (Car car : cars) {
-            Vehicle vehicle = car.getVehicle();
-            ve.add(vehicle);
-        }
+    /*
+     * @RequestMapping(value = { "/car" }, method = RequestMethod.GET)
+     * public @ResponseBody List<Car> carRestListaaaa() {
+     * List<Car> cars = (List<Car>) crepo.findAll();
+     * List<Vehicle> ve = new ArrayList<>();
+     * for (Car car : cars) {
+     * Vehicle vehicle = car.getVehicle();
+     * ve.add(vehicle);
+     * }
+     * 
+     * List<Car> vittu = new ArrayList<>();
+     * for (Car car : cars) {
+     * Car nCar = new Car(car.getFuel(), car.getType(), car.getPrice(),
+     * car.getKilometers(), car.getRented(),
+     * car.getVehicle());
+     * vittu.add(nCar);
+     * }
+     * 
+     * return vittu;
+     * 
+     * }
+     */
 
-        List<Car> vittu = new ArrayList<>();
-        for (Car car : cars) {
-            Car nCar = new Car(car.getFuel(), car.getType(), car.getPrice(), car.getKilometers(), car.getRented(),
-                    car.getVehicle());
-            vittu.add(nCar);
-        }
-
-        return vittu;
-
-    }
-
-    @RequestMapping(value = { "/ccar" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/api/car" }, method = RequestMethod.GET)
     public @ResponseBody List<Car> carRestListaaa() {
         List<Car> cars = (List<Car>) crepo.findAll();
 
-        // Iterate through the list of cars and fetch the associated vehicle information
         for (Car car : cars) {
             Vehicle vehicle = car.getVehicle();
-            // Add the vehicle information to each car object
             car.setVehicle(vehicle);
         }
 
-        // Return the list of cars with associated vehicle information included
         return cars;
+    }
+
+    @RequestMapping(value = { ("/api/rented") }, method = RequestMethod.GET)
+    public @ResponseBody List<Car> carRestList() {
+        return (List<Car>) crepo.findByRented(true);
+    }
+
+    @RequestMapping(value = { ("/api/notrented") }, method = RequestMethod.GET)
+    public @ResponseBody List<Car> carNotrentedRestList() {
+        return (List<Car>) crepo.findByRented(false);
     }
 
 }

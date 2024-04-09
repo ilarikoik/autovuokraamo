@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.example.autovuokraamo.domain.Bike;
+import com.example.autovuokraamo.domain.BikeRepository;
 import com.example.autovuokraamo.domain.Car;
 import com.example.autovuokraamo.domain.CarRepository;
 import com.example.autovuokraamo.domain.Vehicle;
@@ -27,10 +29,10 @@ public class AutovuokraamotyoApplication {
 
 	// bean commanline runner tallenna repoo pari testiä
 	@Bean
-	public CommandLineRunner carRental(CarRepository crepo, VehicleRepository vehirepo) {
+	public CommandLineRunner carRental(CarRepository crepo, VehicleRepository vehirepo, BikeRepository brepo) {
 		return (args) -> {
 
-			List<Vehicle> vehicles = Arrays.asList(
+			List<Vehicle> autoVehicles = Arrays.asList(
 					new Vehicle("audi", "Rs6", "Blue"),
 					new Vehicle("audi", "A5", "Gray"),
 					new Vehicle("Ford", "Transit", "Black"),
@@ -43,32 +45,65 @@ public class AutovuokraamotyoApplication {
 					new Vehicle("Ford", "Focus", "Gray"),
 					new Vehicle("audi", "Q5", "Red"),
 					new Vehicle("audi", "A4", "Red"));
-			vehicles.forEach(vehirepo::save);
+			autoVehicles.forEach(vehirepo::save);
 
-			List<Car> lista = new ArrayList<>();
-			lista.add(new Car("bensa", "auto", 59999, 21000, false, vehicles.get(0)));
-			lista.add(new Car("diesel", "auto", 13500, 110000, true, vehicles.get(1)));
-			lista.add(
-					new Car("bensa", "auto", 24999, 89000, false, vehicles.get(2)));
-			lista.add(new Car("diesel", "auto", 11500, 110000, true, vehicles.get(3)));
-			lista.add(new Car("bensa", "auto", 17500, 81300, true, vehicles.get(4)));
-			lista.add(new Car("bensa", "auto", 17500, 11983, false, vehicles.get(5)));
-			lista.add(new Car("bensa", "auto", 27500, 203111, true, vehicles.get(6)));
-			lista.add(new Car("bensa", "auto", 15500, 55321, false, vehicles.get(7)));
-			lista.add(new Car("bensa", "auto", 43490, 92061, false, vehicles.get(8)));
-			lista.add(new Car("Diesel", "auto", 12750, 136000, false, vehicles.get(9)));
-			lista.add(new Car("Diesel", "auto", 7700, 360000, true, vehicles.get(10)));
-			lista.add(new Car("Diesel", "auto", 13490, 26200, true, vehicles.get(11)));
+			List<Car> autoLista = new ArrayList<>();
+			autoLista.add(new Car("E95", "auto", 65, 21000, false, autoVehicles.get(0)));
+			autoLista.add(new Car("diesel", "auto", 55, 110000, true, autoVehicles.get(1)));
+			autoLista.add(
+					new Car("E95", "auto", 40, 89000, false, autoVehicles.get(2)));
+			autoLista.add(new Car("diesel", "auto", 30, 110000, true, autoVehicles.get(3)));
+			autoLista.add(new Car("E95", "auto", 37, 81300, true, autoVehicles.get(4)));
+			autoLista.add(new Car("E98", "auto", 50, 11983, false, autoVehicles.get(5)));
+			autoLista.add(new Car("E98", "auto", 60, 203111, true, autoVehicles.get(6)));
+			autoLista.add(new Car("E95", "auto", 55, 55321, false, autoVehicles.get(7)));
+			autoLista.add(new Car("E95", "auto", 70, 92061, false, autoVehicles.get(8)));
+			autoLista.add(new Car("Diesel", "auto", 27, 136000, false, autoVehicles.get(9)));
+			autoLista.add(new Car("Diesel", "auto", 35, 360000, true, autoVehicles.get(10)));
+			autoLista.add(new Car("Diesel", "auto", 40, 26200, true, autoVehicles.get(11)));
+			autoLista.forEach(crepo::save);
 
-			lista.forEach(crepo::save);
+			List<Vehicle> bikeVehicles = Arrays.asList(
+					new Vehicle("Honda", "CBR600RR", "Punainen"),
+					new Vehicle("Harley-Davidson", "Sportster Iron 883", "Musta"),
+					new Vehicle("BMW", "R1250GS Adventure", "Valkoinen"),
+					new Vehicle("Kawasaki", "Ninja 650", "Vihreä"),
+					new Vehicle("Yamaha", "MT-07", "Sininen"),
+					new Vehicle("Ducati", "Panigale V4", "Punainen"),
+					new Vehicle("Suzuki", "Boulevard M109R", "Hopea"),
+					new Vehicle("Triumph", "Bonneville T100", "Musta"),
+					new Vehicle("KTM", "1290 Super Duke R", "Oranssi"),
+					new Vehicle("Indian", "Scout Bobber", "Ruskea"));
+			bikeVehicles.forEach(vehirepo::save);
 
-			log.info("kaikkii vehicel -->");
-			for (Vehicle veh : vehirepo.findAll()) {
-				log.info(veh.toString());
-			}
+			List<Bike> bikeLista = new ArrayList<>();
+			bikeLista.add(new Bike("E95", "bike", 25, 1000, false, bikeVehicles.get(0)));
+			bikeLista.add(new Bike("diesel", "bike", 25, 10000, true, bikeVehicles.get(1)));
+			bikeLista.add(
+					new Bike("E95", "bike", 40, 9000, false, bikeVehicles.get(2)));
+			bikeLista.add(new Bike("diesel", "bike", 30, 10000, true, bikeVehicles.get(3)));
+			bikeLista.add(new Bike("E95", "bike", 37, 1300, true, bikeVehicles.get(4)));
+			bikeLista.add(new Bike("E98", "bike", 30, 1983, false, bikeVehicles.get(5)));
+			bikeLista.add(new Bike("E98", "bike", 10, 20111, true, bikeVehicles.get(6)));
+			bikeLista.add(new Bike("E95", "bike", 35, 5521, false, bikeVehicles.get(7)));
+			bikeLista.add(new Bike("E95", "bike", 25, 92061, false, bikeVehicles.get(8)));
+			bikeLista.add(new Bike("Diesel", "bike", 27, 13600, false, bikeVehicles.get(9)));
+
+			bikeLista.forEach(brepo::save);
+
+			/*
+			 * log.info("kaikkii vehicel -->");
+			 * for (Vehicle veh : vehirepo.findAll()) {
+			 * log.info(veh.toString());
+			 * }
+			 */
 			log.info("kaikki autot -->");
 			for (Car car : crepo.findAll()) {
 				log.info(car.toString());
+			}
+			log.info("kaikki mopot -->");
+			for (Bike b : brepo.findAll()) {
+				log.info(b.toString());
 			}
 
 		};

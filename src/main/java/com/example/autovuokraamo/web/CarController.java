@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.autovuokraamo.AutovuokraamotyoApplication;
+import com.example.autovuokraamo.domain.Bike;
+import com.example.autovuokraamo.domain.BikeRepository;
 import com.example.autovuokraamo.domain.Car;
 import com.example.autovuokraamo.domain.CarRepository;
 import com.example.autovuokraamo.domain.Vehicle;
@@ -37,29 +39,50 @@ public class CarController {
 
     @Autowired
     private VehicleRepository vrepo;
+    @Autowired
+
+    private BikeRepository brepo;
 
     @GetMapping("/cars")
     public String carList(Model model) {
-        // vehicle tiedot löytyy myös creposta kun ne on tallennettu sinne Car olion
-        // sisällä
+        // vehicle tiedot löytyy myös creposta kun ne on tallennettu sinne Car olioon
+
+        Iterable<Car> kaikki = crepo.findAll();
+        List<Car> autot = new ArrayList<>();
+        for (Car car : kaikki) {
+            // poistetaa mopot listasta
+            if (!car.getType().equals("mopo")) {
+                autot.add(car);
+            }
+        }
         model.addAttribute("cars", crepo.findAll());
 
         // lähetetää kaikki värit valintoja varte
+
         List<String> colors = new ArrayList<>();
-        for (Vehicle v : vrepo.findAll()) {
-            String VehicleColor = v.getColor();
-            if (!colors.contains(VehicleColor)) {
-                colors.add(VehicleColor);
+        // auto reposta vehicle ja sieltä color listaan ettei tuu mopo värejä
+        for (Car car : crepo.findAll()) {
+            String color = car.getVehicle().getColor();
+            if (!colors.contains(color)) {
+                colors.add(color);
             }
         }
         model.addAttribute("colorlist", colors);
 
         // lähetetää kaikki merkit valintoja varte
         List<String> brandit = new ArrayList<>();
+
+        List<String> mopobrandit = new ArrayList<>();
+        for (Bike s : brepo.findAll()) {
+            String brandi = s.getVehicle().getBrand();
+            mopobrandit.add(brandi);
+        }
+
         for (Vehicle v : vrepo.findAll()) {
             String bra = v.getBrand();
             if (!brandit.contains(bra)) {
-                brandit.add(bra);
+                if (!mopobrandit.contains(bra))
+                    brandit.add(bra);
             }
         }
         model.addAttribute("brandit", brandit);
