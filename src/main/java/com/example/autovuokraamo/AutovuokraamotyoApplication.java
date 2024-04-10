@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
@@ -19,6 +20,7 @@ import com.example.autovuokraamo.domain.Vehicle;
 import com.example.autovuokraamo.domain.VehicleRepository;
 
 @SpringBootApplication
+@EnableAutoConfiguration
 public class AutovuokraamotyoApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(AutovuokraamotyoApplication.class);
@@ -91,20 +93,21 @@ public class AutovuokraamotyoApplication {
 
 			bikeLista.forEach(brepo::save);
 
+			log.info("kaikkii vehicel -->");
+			for (Bike veh : brepo.findAll()) {
+				log.info(veh.toString());
+			}
+
 			/*
-			 * log.info("kaikkii vehicel -->");
-			 * for (Vehicle veh : vehirepo.findAll()) {
-			 * log.info(veh.toString());
+			 * log.info("kaikki autot -->");
+			 * for (Car car : crepo.findAll()) {
+			 * log.info(car.toString());
+			 * }
+			 * log.info("kaikki mopot -->");
+			 * for (Bike b : brepo.findAll()) {
+			 * log.info(b.toString());
 			 * }
 			 */
-			log.info("kaikki autot -->");
-			for (Car car : crepo.findAll()) {
-				log.info(car.toString());
-			}
-			log.info("kaikki mopot -->");
-			for (Bike b : brepo.findAll()) {
-				log.info(b.toString());
-			}
 
 		};
 	}

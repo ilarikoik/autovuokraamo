@@ -6,12 +6,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
+
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-// automerkillä yhestä moneen suhde /*  */
-// Yhteiset tiedot kaikille autoille.. merkki
+// vehicle yhestä moneen suhde /*  */
 
 @Entity
 public class Vehicle {
@@ -19,7 +23,13 @@ public class Vehicle {
     @Id // automaattinen ID luonti
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String brand, model, color;
+
+    @NotNull(message = "Brand is mandatory")
+    private String brand;
+    @NotNull(message = "Model is mandatoray")
+    private String model;
+    @NotNull(message = "Color is mandatory")
+    private String color;
 
     public Vehicle() {
     }

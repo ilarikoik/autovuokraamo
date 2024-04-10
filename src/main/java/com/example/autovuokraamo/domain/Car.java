@@ -12,6 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 // jos täällä ois yleistietoja jotka viittaa kaikkiin autoihin yleisesti niin vois käyttä extend
 // mutta kun on vähä tarkempi ns. autokohtaiset tiedot niin viittaus car luokkaan riittää 
@@ -21,11 +24,14 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long carId;
+
+    @NotEmpty(message = "cant be empty")
     private String fuel, type;
+    @Min(value = 1)
     private int price, kilometers;
+    @NotNull
     private Boolean rented = false; // eli on vapaa
 
-    // tuotteella yksi valmistaja
     // car luokka viittaa vehicle luokkaan tässä joten extends ei tarvitse käyttää?
 
     /*

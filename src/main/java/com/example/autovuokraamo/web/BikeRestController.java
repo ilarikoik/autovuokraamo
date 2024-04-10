@@ -33,4 +33,5 @@ public class BikeRestController {
         List<Bike> bikes = (List<Bike>) brepo.findByRented(false);
         return (List<Bike>) bikes;
     }
+
 }
