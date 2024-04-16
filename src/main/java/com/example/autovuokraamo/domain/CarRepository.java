@@ -1,6 +1,7 @@
 package com.example.autovuokraamo.domain;
 
 import java.util.List;
+import java.util.function.IntPredicate;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,10 @@ public interface CarRepository extends CrudRepository<Car, Long> {
     /* List<Car> findByVehicleList(List<Vehicle> list); */
 
     List<Car> findByRented(boolean b);
+
+    Car findByType(String string);
+
+    /* List<Car> findByBrand(String brand); */
 
     /* List<Car> findByVehicle(List<Vehicle> byColor); */
 

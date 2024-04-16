@@ -14,4 +14,8 @@ public interface VehicleRepository extends CrudRepository<Vehicle, Long> {
     Iterable<String> findAllDistinctBrands();
 
     List<Vehicle> findByColor(String color);
+
+    Vehicle findOneByBrand(String string);
+
+    /* List<Vehicle> findByType(String string); */
 }

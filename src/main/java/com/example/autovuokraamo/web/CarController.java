@@ -13,6 +13,7 @@ import javax.swing.text.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,9 @@ import com.example.autovuokraamo.domain.Car;
 import com.example.autovuokraamo.domain.CarRepository;
 import com.example.autovuokraamo.domain.Vehicle;
 import com.example.autovuokraamo.domain.VehicleRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -97,7 +101,11 @@ public class CarController {
     }
 
     @PostMapping("/save")
-    public String saveCar(@ModelAttribute Car car) {
+    public String saveCar(@Valid @ModelAttribute Car car, BindingResult br) {
+        if (br.hasErrors()) {
+            return "redirect:/Error";
+        }
+
         // pitää tallentaa taas Vehicle eka
         Vehicle ve = car.getVehicle();
         vrepo.save(ve);

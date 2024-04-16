@@ -22,16 +22,11 @@ public class Bike {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bikeId;
 
-    // einää validoinnit toimi missää luokassa?? menee läpi vaikka laitta null tai
-    // ""
-    // thynmeleaffi menee solmuu ku yrittää hakee tietoja jos laittaa null
-    // mut ei mihikää tuu mitää
-    // näit viestejä
     @NotBlank(message = "Name is mandatory")
     @NotNull(message = "Name must not be null")
     private String type, fuel;
 
-    @Min(value = 1)
+    @Min(value = 1, message = "must be greater than 0")
     private int price, kilometers;
 
     @NotNull

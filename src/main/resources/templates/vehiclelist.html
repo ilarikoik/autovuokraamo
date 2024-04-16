@@ -22,7 +22,7 @@
             <td th:text="${brand}"></td>
             <td th:text="${model}"></td>
             <td th:text="${color}"></td>
-            <td style="height: 10px; width: 150px; background-color: rgb(0, 255, 255); color: white;"> <a th:href="@{/info/{brand}(brand=${brand})}">kakki saman merkkiset </a> </td> 
+            <td style="height: 10px; width: 150px; background-color: rgb(0, 255, 255); color: white;"> <a th:href="@{/allvehiclesby/{brand}(brand=${brand})}">kakki saman merkkiset </a> </td> 
             <td style="height: 10px; width: 10px; background-color: red;"><a th:href="@{/rented/{brand}(brand=${brand})}">Varattu </a></td> 
             <td  style="height: 10px; width: 10px; background-color: rgb(8, 230, 0);"><a th:href="@{/notrented/{brand}(brand=${brand})}">Vapaat </a></td> 
             

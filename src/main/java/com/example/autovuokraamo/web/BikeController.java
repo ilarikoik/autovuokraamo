@@ -13,6 +13,7 @@ import javax.swing.text.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +24,12 @@ import com.example.autovuokraamo.domain.BikeRepository;
 import com.example.autovuokraamo.domain.Vehicle;
 import com.example.autovuokraamo.domain.VehicleRepository;
 
+import jakarta.validation.Valid;
+
 @Controller
 public class BikeController {
+
+    private static final Logger log = LoggerFactory.getLogger(VehicleController.class);
 
     @Autowired
     private BikeRepository brepo;
@@ -73,7 +78,13 @@ public class BikeController {
     }
 
     @PostMapping("/savebike")
-    public String saveCar(@ModelAttribute Bike bike) {
+    public String saveCar(@Valid @ModelAttribute Bike bike, BindingResult br) {
+
+        // jos ei validointi ei mee läpi nii palauttaa toiselle error sivulle, lisää
+        // error tekstit viel
+        if (br.hasErrors()) {
+            return "redirect:/Error";
+        }
         // pitää tallentaa taas Vehicle eka
         Vehicle ve = bike.getVehicle();
         vrepo.save(ve);
@@ -144,6 +155,12 @@ public class BikeController {
             }
         }
         model.addAttribute("autotiedot", mopot); // lähetetää tiedot
+
+        // ei voi kutsua suoraan niinku main metodissa vaa pitää url kautta kutsua
+        log.info("\n \nkaikki mopot merkin mukaan");
+        for (Bike bike : mopot) {
+            System.out.println(bike.toString());
+        }
 
         return "infos";
     }

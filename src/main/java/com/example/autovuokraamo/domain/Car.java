@@ -27,7 +27,7 @@ public class Car {
 
     @NotEmpty(message = "cant be empty")
     private String fuel, type;
-    @Min(value = 1)
+    @Min(value = 1, message = "must be > 0")
     private int price, kilometers;
     @NotNull
     private Boolean rented = false; // eli on vapaa
