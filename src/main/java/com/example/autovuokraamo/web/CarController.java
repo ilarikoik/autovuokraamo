@@ -91,21 +91,41 @@ public class CarController {
         }
         model.addAttribute("brandit", brandit);
 
+        // varatut autot lista /cars sivulle select option varte
+        List<String> rentedbrandit = new ArrayList<>();
+        for (Car car : crepo.findByRented(true)) {
+            String merkki = car.getVehicle().getBrand();
+            if (!rentedbrandit.contains(merkki)) {
+                rentedbrandit.add(merkki);
+            }
+        }
+        model.addAttribute("rentedbrandit", rentedbrandit);
+
+        // vapaat autot lista /cars sivulle select option varte
+        List<String> notrentedbrandit = new ArrayList<>();
+        for (Car car : crepo.findByRented(false)) {
+            String merkki = car.getVehicle().getBrand();
+            if (!notrentedbrandit.contains(merkki)) {
+                notrentedbrandit.add(merkki);
+            }
+        }
+        model.addAttribute("notrentedbrandit", notrentedbrandit);
+
         return "carlist";
     }
 
     @GetMapping("/addcar")
     public String addCar(Model model) {
         model.addAttribute("car", new Car());
+
         return "addcar";
     }
 
     @PostMapping("/save")
     public String saveCar(@Valid @ModelAttribute Car car, BindingResult br) {
         if (br.hasErrors()) {
-            return "redirect:/Error";
+            return "addcar";
         }
-
         // pitää tallentaa taas Vehicle eka
         Vehicle ve = car.getVehicle();
         vrepo.save(ve);
@@ -144,6 +164,7 @@ public class CarController {
     @GetMapping("/rented")
     public String showRentedCars(Boolean rented, Model model) {
         List<Car> rentedList = crepo.findByRented(true);
+
         model.addAttribute("rentedlist", rentedList);
         return "rentedlist";
 
@@ -169,6 +190,17 @@ public class CarController {
             }
         }
 
+        List<Object> bikenotrentedList = new ArrayList<>();
+
+        for (Bike c : brepo.findByRented(true)) {
+            String currentBikeBrand = c.getVehicle().getBrand();
+            if (currentBikeBrand.equals(brand)) {
+                bikenotrentedList.add(c);
+            }
+        }
+
+        model.addAttribute("bikenotrentedlist", bikenotrentedList);
+
         model.addAttribute("notrentedlist", notRentedList);
         return "notrentedbybrand";
 
@@ -177,11 +209,17 @@ public class CarController {
     @GetMapping("/rented/{brand}")
     public String showRentedCarsByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
         List<Car> cars = crepo.findByRented(true);
-        List<Car> rentedList = new ArrayList<>();
+        List<Object> rentedList = new ArrayList<>();
 
         for (Car c : cars) {
             String currentCarBrand = c.getVehicle().getBrand();
             if (currentCarBrand.equals(brand)) {
+                rentedList.add(c);
+            }
+        }
+        for (Bike c : brepo.findByRented(true)) {
+            String currentBikeBrand = c.getVehicle().getBrand();
+            if (currentBikeBrand.equals(brand)) {
                 rentedList.add(c);
             }
         }
@@ -220,7 +258,7 @@ public class CarController {
         // ehkä joteki tällei
         /* List<Car> lista = crepo.findByVehicle(vrepo.findByColor(color)); */
 
-        model.addAttribute("autotiedot", byColor);
+        model.addAttribute("bycolor", byColor);
         return "bycolor";
     }
 

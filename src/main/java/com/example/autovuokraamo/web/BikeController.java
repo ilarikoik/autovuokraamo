@@ -56,6 +56,25 @@ public class BikeController {
         }
         model.addAttribute("brandit", brandilista); // lähetetää tiedot
 
+        // varatut Bikes lista /cars sivulle select option varte
+        List<String> rentedbrandit = new ArrayList<>();
+        for (Bike bike : brepo.findByRented(true)) {
+            String merkki = bike.getVehicle().getBrand();
+            if (!rentedbrandit.contains(merkki)) {
+                rentedbrandit.add(merkki);
+            }
+        }
+        model.addAttribute("rentedbrandit", rentedbrandit);
+
+        // vapaat bikes lista /cars sivulle select option varte
+        List<String> notrentedbrandit = new ArrayList<>();
+        for (Bike car : brepo.findByRented(false)) {
+            String merkki = car.getVehicle().getBrand();
+            if (!notrentedbrandit.contains(merkki)) {
+                notrentedbrandit.add(merkki);
+            }
+        }
+        model.addAttribute("notrentedbrandit", notrentedbrandit);
         return "bikes";
     }
 
@@ -80,10 +99,8 @@ public class BikeController {
     @PostMapping("/savebike")
     public String saveCar(@Valid @ModelAttribute Bike bike, BindingResult br) {
 
-        // jos ei validointi ei mee läpi nii palauttaa toiselle error sivulle, lisää
-        // error tekstit viel
         if (br.hasErrors()) {
-            return "redirect:/Error";
+            return "addbike";
         }
         // pitää tallentaa taas Vehicle eka
         Vehicle ve = bike.getVehicle();
@@ -129,21 +146,23 @@ public class BikeController {
             }
         }
 
-        model.addAttribute("bikesbycolor", byColor);
-        return "bikebycolor";
+        model.addAttribute("bycolor", byColor);
+        return "bycolor";
     }
 
-    @GetMapping("/brented")
-    public String showRentedBikesByBrand(Model model) {
-        model.addAttribute("rentedlist", brepo.findByRented(true));
-        return "rentedlist";
-    }
-
-    @GetMapping("/bnotrented")
-    public String showNotRentedBikesByBrand(Model model) {
-        model.addAttribute("notrentedlist", brepo.findByRented(false));
-        return "notrentedlist";
-    }
+    /*
+     * @GetMapping("/brented")
+     * public String showRentedBikesByBrand(Model model) {
+     * model.addAttribute("rentedlist", brepo.findByRented(true));
+     * return "rentedlist";
+     * }
+     * 
+     * @GetMapping("/bnotrented")
+     * public String showNotRentedBikesByBrand(Model model) {
+     * model.addAttribute("notrentedlist", brepo.findByRented(false));
+     * return "notrentedlist";
+     * }
+     */
 
     @GetMapping("/bikeinfo/{brand}")
     public String findBikes(@PathVariable("brand") String brand, Model model) {
@@ -164,4 +183,22 @@ public class BikeController {
 
         return "infos";
     }
+
+    @GetMapping("/bnotrented/{brand}")
+    public String showNotRentedCarsByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
+        List<Bike> bikes = brepo.findByRented(false);
+        List<Bike> notRentedList = new ArrayList<>();
+
+        for (Bike b : bikes) {
+            String currentCarBrand = b.getVehicle().getBrand();
+            if (currentCarBrand.equals(brand)) {
+                notRentedList.add(b);
+            }
+        }
+
+        model.addAttribute("notrentedlist", notRentedList);
+        return "notrentedbybrand";
+
+    }
+
 }

@@ -1,50 +1,61 @@
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+  <head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/css/bootstrap.min.css"
+      th:href="@{/css/css/bootstrap.min.css}"
+    />
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <h3>autot värin perusteella</h3>
-    
-    <table>
-        <br><br>
-        <thead>
-            <tr>
-                <th>Merkki</th>
-                <th>Malli</th>
-                <th>Väri</th>
-                <th>kilometers</th>
-                <th>tyyppi</th>
-                <th>hinta</th>
-                <th>polttoaine</th>
-                <th>vuokrattu</th>
-            </tr>
-        </thead>
-        <tbody>
+  </head>
+  <body>
+    <div class="container">
+      <a th:href="@{/vehicles}"
+        ><button class="btn btn-primary btn-lg btn-block">
+          ALL (BIKES & CARS)
+        </button></a
+      >
+      <br />
+      <a th:href="@{/cars}"
+        ><button class="btn btn-warning btn-lg btn-block">CARS</button></a
+      >
+      <br />
+      <a th:href="@{/bikes}"
+        ><button class="btn btn-warning btn-lg btn-block">BIKES</button></a
+      >
+    </div>
+    <h3>värin perusteella</h3>
 
-            
-            <tr th:each="car: ${autotiedot}">
-                <td th:text="${car.vehicle.brand}"></td>
-                <td th:text="${car.vehicle.model}"></td>
-                <td th:text="${car.vehicle.color}"></td>
-                <td th:text="${car.kilometers}"></td>
-                <td th:text="${car.type}"></td>
-                <td th:text="${car.price} +'€'"></td>
-                <td th:text="${car.fuel}"></td>
-                <td th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
-            </tr>
-        </tbody>
-            
-    </table> 
-    
-    <br>
-    <br>
-    <a th:href="@{/addcar}">lisää auto</a>
-    <br><br>
-    <a th:href="@{/cars}">Carlist </a>
+    <table class="table table-striped table-dark">
+      <br /><br />
+      <thead>
+        <tr>
+          <th>Merkki</th>
+          <th>Malli</th>
+          <th>Väri</th>
+          <th>kilometers</th>
+          <th>tyyppi</th>
+          <th>hinta</th>
+          <th>polttoaine</th>
+          <th>vuokrattu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="color: ${bycolor}">
+          <td th:text="${color.vehicle.brand}"></td>
+          <td th:text="${color.vehicle.model}"></td>
+          <td th:text="${color.vehicle.color}"></td>
+          <td th:text="${color.kilometers}"></td>
+          <td th:text="${color.type}"></td>
+          <td th:text="${color.price} +'€'"></td>
+          <td th:text="${color.fuel}"></td>
+          <td th:text="${color.rented} ? 'Kyllä' : 'Ei'"></td>
+        </tr>
+      </tbody>
+    </table>
 
-</body>
+    <br />
+  </body>
 </html>

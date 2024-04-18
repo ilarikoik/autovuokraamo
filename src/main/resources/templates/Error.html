@@ -1,19 +1,27 @@
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+  <head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/bootstrap.min.css"
+      th:href="@{/css/bootstrap.min.css}"
+    />
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <h3>ERORRRR</h3>
-    <h3>ERORRRR</h3>
-    <h3>ERORRRR</h3>
-    
-    <hr style="color: red;">
-    <h3 style="text-align: center;">validointi errori </h3>
-    <p style="text-align: center;">errorit tähä viel .....</p>
-    <hr style="color: red;">
-</body>
+  </head>
+  <body>
+    <div style="text-align: center; margin-top: 150px">
+      <h3>ERORRRR</h3>
+      <h3>ERORRRR</h3>
+      <h3>ERORRRR</h3>
+      <br /><br /><br />
+    </div>
+
+    <hr style="color: red" />
+    <h3 style="text-align: center">
+      <a th:href="@{/vehicles}"> Takaisin Etusivulle</a>
+    </h3>
+    <hr style="color: red" />
+  </body>
 </html>

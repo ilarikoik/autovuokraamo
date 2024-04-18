@@ -1,47 +1,54 @@
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <title>CarRental</title>
+  <head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/css/bootstrap.min.css"
+      th:href="@{/css/css/bootstrap.min.css}"
+    />
+    <title>Rental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <h3>Rented </h3>
-    <table>
-
-        <tr>
-            <th>Merkki</th>
-            <th>Malli</th>
-            <th>Kilometrit</th>
-            <th>Väri</th>
-            <th>Tyyppi</th>
-            <th>Polttoaine</th>
-            <th>Hinta</th>
-            <th>Vuokrattu</th>
-        </tr>
-        <tr th:each="rented : ${rentedlist}">
-            <td th:text="${rented.vehicle.brand}"></td>
-            <td th:text="${rented.vehicle.model}"></td>
-            <td th:text="${rented.kilometers}"></td>
-            <td th:text="${rented.vehicle.color}"></td>
-            <td th:text="${rented.type}"></td>
-            <td th:text="${rented.fuel}"></td>
-            <td th:text="${rented.price} +' €'"></td>
-            <td th:text="${rented.rented} ? 'Kyllä' : 'Ei'"></td>
-            
-        </tr>
-    </table> 
-    <br>
-    <br><a th:href="@{/bikes}">bikes</a>
-    <br><br>
-    <a th:href="@{/addcar}">lisää auto</a>
-    <br><br>
-    <a th:href="@{/vehicles}">vehicles</a>
-    <br><br>
-    <a th:href="@{/notrented}">notrented Cars</a>
-    <br><br>
-    <a th:href="@{/cars}">Carlist </a>
-
-</body>
+  </head>
+  <div class="container">
+    <a th:href="@{/vehicles}"
+      ><button class="btn btn-primary btn-lg btn-block">
+        ALL (BIKES & CARS)
+      </button></a
+    >
+    <br />
+    <a th:href="@{/cars}"
+      ><button class="btn btn-warning btn-lg btn-block">CARS</button></a
+    >
+    <br />
+    <a th:href="@{/bikes}"
+      ><button class="btn btn-warning btn-lg btn-block">BIKES</button></a
+    >
+  </div>
+  <body>
+    <h3>Rented</h3>
+    <table class="table table-striped table-dark">
+      <tr>
+        <th>Merkki</th>
+        <th>Malli</th>
+        <th>Kilometrit</th>
+        <th>Väri</th>
+        <th>Tyyppi</th>
+        <th>Polttoaine</th>
+        <th>Hinta</th>
+        <th>Vuokrattu</th>
+      </tr>
+      <tr th:each="rented : ${rentedlist}">
+        <td th:text="${rented.vehicle.brand}"></td>
+        <td th:text="${rented.vehicle.model}"></td>
+        <td th:text="${rented.kilometers}"></td>
+        <td th:text="${rented.vehicle.color}"></td>
+        <td th:text="${rented.type}"></td>
+        <td th:text="${rented.fuel}"></td>
+        <td th:text="${rented.price} +' €'"></td>
+        <td th:text="${rented.rented} ? 'Kyllä' : 'Ei'"></td>
+      </tr>
+    </table>
+    <br />
+  </body>
 </html>

@@ -6,8 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -25,10 +27,15 @@ public class Vehicle {
     private long id;
 
     @NotNull(message = "Brand is mandatory")
+    @Size(max = 20, message = "Max 20 characters!")
     private String brand;
+
     @NotNull(message = "Model is mandatoray")
+    @Size(max = 20, message = "Max 20 characters!")
     private String model;
+
     @NotNull(message = "Color is mandatory")
+    @Size(max = 10, message = "Max 10 characters!")
     private String color;
 
     public Vehicle() {

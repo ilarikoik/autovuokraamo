@@ -1,70 +1,144 @@
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+  <head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/css/bootstrap.min.css"
+      th:href="@{/css/css/bootstrap.min.css}"
+    />
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-    <h3>BIKES</h3>
-    <table>
-        <br><br>
-        <label for="">Hae mopoja värin perusteella  </label>
-        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;" > 
-            <option th:each="color : ${colors}" th:value="${'/bikebycolor/' + color}" th:text="${color}"></option>
-        </select>
-<br>
-        <label for="">Hae vuokrattu/vuokraamaton  </label>
-        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
-            <option value="">Select...</option>
-            <option value="/brented">vuokrattu</option>
-            <option value="/bnotrented">vuokraamaton</option>
-        </select>
-        <br>
-        <label for="">Hae mopoja merkin perusteella  </label>
-        <select name="" id="" onchange="window.location.href = this.value;" style="margin: 10px;"> 
-            <option th:each="merkki : ${brandit}" th:value="${'/bikeinfo/' + merkki}" th:text="${merkki}"></option>
-        </select>
-        <tr>
-            <th>Merkki</th>
-            <th>Malli</th>
-            <th>Kilometrit</th>
-            <th>Väri</th>
-            <th>Polttoaine</th>
-            <th>Tyyppi</th>
-            <th>Hinta</th>
-            <th>Vuokrattu</th>
-        </tr>
-        <tr th:each="bike : ${bikes}" >
-            <td style="padding: 7px;" th:text="${bike.vehicle.brand}" ></td>
-            <td style="padding: 7px;" th:text="${bike.vehicle.model}"></td>
-            <td style="padding: 7px;" th:text="${bike.kilometers} + '`km'  "  ></td>
-            <td style="padding: 7px;" th:text="${bike.vehicle.color}"></td>
-            <td style="padding: 7px;" th:text="${bike.type}"></td>
-            <td style="padding: 7px;" th:text="${bike.fuel}"></td>
-            <td style="padding: 7px;" th:text="${bike.price} +' €'"></td>
-            <td style="padding: 7px;" th:text="${bike.rented} ? 'Kyllä' : 'Ei'"></td>
-            <form th:action="@{/rentbike/{id}(id=${bike.bikeId})}" method="post">
-                <td>
-                    <button type="submit">VUOKRAA</button>
-                </td>
-            </form>
-            <td> <a th:href="@{/editbike/{id}(id=${bike.bikeId})}">EDIT </a> </td> 
-            <td> <a th:href="@{/deletebike/{id}(id=${bike.bikeId})}">DELETE </a> </td> 
-            
-            
-        </tr>
-    </table> 
-    <br>
-    <br>
-    <a th:href="@{/addbike}">lisää mopo</a>
-    <br><br>
-    <a th:href="@{/vehicles}">vehicles</a>
-    <br><br>
-    <a th:href="@{/cars}">cars</a>
+  </head>
+  <body>
+    <br />
+
+    <div class="container">
+      <a th:href="@{/vehicles}"
+        ><button class="btn btn-primary btn-lg btn-block">
+          ALL (BIKES & CARS)
+        </button></a
+      >
+      <br />
+      <a th:href="@{/cars}"
+        ><button class="btn btn-primary btn-lg btn-block">CARS</button></a
+      >
+    </div>
+    <h3 style="text-align: center; margin-top: 50px">BIKES</h3>
+    <table class="table table-striped table-dark">
+      <br />
+      <a th:href="@{/addbike}"
+        ><button class="btn btn-success btn-lg btn-block">ADD BIKE</button></a
+      >
+      <tr>
+        <th>Merkki</th>
+        <th>Malli</th>
+        <th>Kilometrit</th>
+        <th>Väri</th>
+        <th>Tyyppi</th>
+        <th>Polttoaine</th>
+        <th>Hinta</th>
+        <th>Vuokrattu</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr th:each="bike : ${bikes}">
+        <td style="padding: 7px" th:text="${bike.vehicle.brand}"></td>
+        <td style="padding: 7px" th:text="${bike.vehicle.model}"></td>
+        <td style="padding: 7px" th:text="${bike.kilometers} + '`km'  "></td>
+        <td style="padding: 7px" th:text="${bike.vehicle.color}"></td>
+        <td style="padding: 7px" th:text="${bike.type}"></td>
+        <td style="padding: 7px" th:text="${bike.fuel}"></td>
+        <td style="padding: 7px" th:text="${bike.price} +' €'"></td>
+        <td style="padding: 7px" th:text="${bike.rented} ? 'Kyllä' : 'Ei'"></td>
+        <form th:action="@{/rentbike/{id}(id=${bike.bikeId})}" method="post">
+          <td>
+            <button type="submit" class="btn btn-warning">VUOKRAA</button>
+          </td>
+        </form>
+        <td>
+          <a th:href="@{/editbike/{id}(id=${bike.bikeId})}"
+            ><button class="btn btn-primary">EDIT</button>
+          </a>
+          <a th:href="@{/deletebike/{id}(id=${bike.bikeId})}"
+            ><button class="btn btn-danger">DELETE</button>
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div style="text-align: center">
+      <label for="">Hae mopoja värin perusteella </label>
+      <select
+        name=""
+        id=""
+        onchange="window.location.href = this.value;"
+        style="margin: 10px"
+      >
+        <option
+          th:each="color : ${colors}"
+          th:value="${'/bikebycolor/' + color}"
+          th:text="${color}"
+        ></option>
+      </select>
+      <label for="">Hae vuokrattu/vuokraamaton </label>
+      <select
+        name=""
+        id=""
+        onchange="window.location.href = this.value;"
+        style="margin: 10px"
+      >
+        <option value="">Select...</option>
+        <option value="/brented">vuokrattu</option>
+        <option value="/bnotrented">vuokraamaton</option>
+      </select>
+      <label for="">Hae mopoja merkin perusteella </label>
+      <select
+        name=""
+        id=""
+        onchange="window.location.href = this.value;"
+        style="margin: 10px"
+      >
+        <option
+          th:each="merkki : ${brandit}"
+          th:value="${'/bikeinfo/' + merkki}"
+          th:text="${merkki}"
+        ></option>
+      </select>
+      <label for="">Vuokrattujen merkkien mukaan </label>
+      <select
+        name=""
+        id=""
+        onchange="window.location.href = this.value;"
+        style="margin: 10px"
+      >
+        <option
+          th:each="merkki : ${rentedbrandit}"
+          th:value="${'/rented/' + merkki}"
+          th:text="${merkki}"
+        ></option>
+      </select>
+
+      <label for="">Hae vapaana olevien merkkin mukaan </label>
+      <select
+        name=""
+        id=""
+        onchange="window.location.href = this.value;"
+        style="margin: 10px"
+      >
+        <option
+          th:each="merkki : ${notrentedbrandit}"
+          th:value="${'/bnotrented/' + merkki}"
+          th:text="${merkki}"
+        ></option>
+      </select>
+    </div>
+
+    <br />
+    <br />
+
     <!-- <a th:href="@{/rented}">rented Cars</a>
     <br><br>
     <a th:href="@{/notrented}">notrented Cars</a> -->
-</body>
+  </body>
 </html>

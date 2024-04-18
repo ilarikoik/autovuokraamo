@@ -50,19 +50,19 @@ public class AutovuokraamotyoApplication {
 			autoVehicles.forEach(vehirepo::save);
 
 			List<Car> autoLista = new ArrayList<>();
-			autoLista.add(new Car("E95", "auto", 65, 21000, false, autoVehicles.get(0)));
-			autoLista.add(new Car("diesel", "auto", 55, 110000, true, autoVehicles.get(1)));
+			autoLista.add(new Car("auto", "diesel", 65, 21000, false, autoVehicles.get(0)));
+			autoLista.add(new Car("auto", "e95", 55, 110000, true, autoVehicles.get(1)));
 			autoLista.add(
-					new Car("E95", "auto", 40, 89000, false, autoVehicles.get(2)));
-			autoLista.add(new Car("diesel", "auto", 30, 110000, true, autoVehicles.get(3)));
-			autoLista.add(new Car("E95", "auto", 37, 81300, true, autoVehicles.get(4)));
-			autoLista.add(new Car("E98", "auto", 50, 11983, false, autoVehicles.get(5)));
-			autoLista.add(new Car("E98", "auto", 60, 203111, true, autoVehicles.get(6)));
-			autoLista.add(new Car("E95", "auto", 55, 55321, false, autoVehicles.get(7)));
-			autoLista.add(new Car("E95", "auto", 70, 92061, false, autoVehicles.get(8)));
-			autoLista.add(new Car("Diesel", "auto", 27, 136000, false, autoVehicles.get(9)));
-			autoLista.add(new Car("Diesel", "auto", 35, 360000, true, autoVehicles.get(10)));
-			autoLista.add(new Car("Diesel", "auto", 40, 26200, true, autoVehicles.get(11)));
+					new Car("auto", "E95", 40, 89000, false, autoVehicles.get(2)));
+			autoLista.add(new Car("auto", "diesel", 30, 110000, true, autoVehicles.get(3)));
+			autoLista.add(new Car("auto", "E95", 37, 81300, true, autoVehicles.get(4)));
+			autoLista.add(new Car("auto", "E98", 50, 11983, false, autoVehicles.get(5)));
+			autoLista.add(new Car("auto", "E98", 60, 203111, true, autoVehicles.get(6)));
+			autoLista.add(new Car("auto", "E95", 55, 55321, false, autoVehicles.get(7)));
+			autoLista.add(new Car("auto", "E95", 70, 92061, false, autoVehicles.get(8)));
+			autoLista.add(new Car("auto", "Diesel", 27, 136000, false, autoVehicles.get(9)));
+			autoLista.add(new Car("auto", "Diesel", 35, 360000, true, autoVehicles.get(10)));
+			autoLista.add(new Car("auto", "Diesel", 40, 26200, true, autoVehicles.get(11)));
 			autoLista.forEach(crepo::save);
 
 			List<Vehicle> bikeVehicles = Arrays.asList(
@@ -79,17 +79,17 @@ public class AutovuokraamotyoApplication {
 			bikeVehicles.forEach(vehirepo::save);
 
 			List<Bike> bikeLista = new ArrayList<>();
-			bikeLista.add(new Bike("E95", "bike", 25, 1000, false, bikeVehicles.get(0)));
-			bikeLista.add(new Bike("diesel", "bike", 25, 10000, true, bikeVehicles.get(1)));
+			bikeLista.add(new Bike("bike", "Diesel", 25, 1000, false, bikeVehicles.get(0)));
+			bikeLista.add(new Bike("bike", "Diesel", 25, 10000, true, bikeVehicles.get(1)));
 			bikeLista.add(
-					new Bike("E95", "bike", 40, 9000, false, bikeVehicles.get(2)));
-			bikeLista.add(new Bike("diesel", "bike", 30, 10000, true, bikeVehicles.get(3)));
-			bikeLista.add(new Bike("E95", "bike", 37, 1300, true, bikeVehicles.get(4)));
-			bikeLista.add(new Bike("E98", "bike", 30, 1983, false, bikeVehicles.get(5)));
-			bikeLista.add(new Bike("E98", "bike", 10, 20111, true, bikeVehicles.get(6)));
-			bikeLista.add(new Bike("E95", "bike", 35, 5521, false, bikeVehicles.get(7)));
-			bikeLista.add(new Bike("E95", "bike", 25, 92061, false, bikeVehicles.get(8)));
-			bikeLista.add(new Bike("Diesel", "bike", 27, 13600, false, bikeVehicles.get(9)));
+					new Bike("bike", "E95", 40, 9000, false, bikeVehicles.get(2)));
+			bikeLista.add(new Bike("bike", "Diesel", 30, 10000, true, bikeVehicles.get(3)));
+			bikeLista.add(new Bike("bike", "E95", 37, 1300, true, bikeVehicles.get(4)));
+			bikeLista.add(new Bike("bike", "E98", 30, 1983, false, bikeVehicles.get(5)));
+			bikeLista.add(new Bike("bike", "bike", 10, 20111, true, bikeVehicles.get(6)));
+			bikeLista.add(new Bike("bike", "E95", 35, 5521, false, bikeVehicles.get(7)));
+			bikeLista.add(new Bike("bike", "E98", 25, 92061, false, bikeVehicles.get(8)));
+			bikeLista.add(new Bike("bike", "Diesel", 27, 13600, false, bikeVehicles.get(9)));
 
 			bikeLista.forEach(brepo::save);
 

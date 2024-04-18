@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Bike {
@@ -24,9 +25,10 @@ public class Bike {
 
     @NotBlank(message = "Name is mandatory")
     @NotNull(message = "Name must not be null")
+    @Size(max = 6, message = "Max 6 characters!")
     private String type, fuel;
 
-    @Min(value = 1, message = "must be greater than 0")
+    @Min(value = 1, message = "must be greater than 1")
     private int price, kilometers;
 
     @NotNull

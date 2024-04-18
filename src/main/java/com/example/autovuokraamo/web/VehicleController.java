@@ -62,7 +62,6 @@ public class VehicleController {
         // hakee vehicle reposta brandin mukaan
         Iterable<Vehicle> vehiclesByBrand = vrepo.findByBrand(brand);
 
-        // lista autoille jotka osuu
         List<Car> carslist = new ArrayList<>();
 
         // käydää brandi lista läpi ja jos carReposta löytyy vehicle nii lisätää listaan

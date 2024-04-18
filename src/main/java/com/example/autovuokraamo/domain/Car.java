@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 // jos täällä ois yleistietoja jotka viittaa kaikkiin autoihin yleisesti niin vois käyttä extend
 // mutta kun on vähä tarkempi ns. autokohtaiset tiedot niin viittaus car luokkaan riittää 
@@ -26,8 +27,9 @@ public class Car {
     private long carId;
 
     @NotEmpty(message = "cant be empty")
-    private String fuel, type;
-    @Min(value = 1, message = "must be > 0")
+    @Size(max = 6, message = "Max 6 characters!")
+    private String type, fuel;
+    @Min(value = 1, message = "must be higher than 1")
     private int price, kilometers;
     @NotNull
     private Boolean rented = false; // eli on vapaa
@@ -48,10 +50,10 @@ public class Car {
     public Car() {
     }
 
-    public Car(String fuel, String type, int price, int kilometers, boolean rented, Vehicle vehicle) {
+    public Car(String type, String fuel, int price, int kilometers, boolean rented, Vehicle vehicle) {
         super();
-        this.fuel = fuel;
         this.type = type;
+        this.fuel = fuel;
         this.price = price;
         this.kilometers = kilometers;
         this.rented = rented;
