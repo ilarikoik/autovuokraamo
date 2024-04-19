@@ -7,27 +7,22 @@
       href="/css/css/bootstrap.min.css"
       th:href="@{/css/css/bootstrap.min.css}"
     />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="/css/bootstrap.min.css"
-      th:href="@{/css/bootstrap.min.css}"
-    />
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
-  <body>
-    <h3>add bike</h3>
-
+  <body
+    style="background-color: rgb(71, 71, 71); color: white; font-weight: bold"
+  >
+    <h3 th:text="${otsikko}"></h3>
     <div style="text-align: left">
       <form
-        action="@{/savebike}"
+        action="${save}"
         method="post"
-        th:action="@{/savebike}"
+        th:action="${save}"
         th:object="${bike}"
       >
-        <input type="hidden" th:field="*{vehicle.id}" />
-        <br /><input
+        <input type="hidden" th:field="*{bikeId}" />
+        <input
           th:text="brand"
           type="text"
           placeholder="brand"
@@ -83,7 +78,8 @@
         <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
           >Error</span
         >
-        <br /><input
+        <br />
+        <input
           th:text="bike"
           type="text"
           th:field="*{type}"
@@ -110,20 +106,24 @@
           <option value="true">Kyllä</option>
           <option value="false">Ei</option>
         </select>
-
         <br />
         <br />
-    <a th:href="@{/savebike}">
-
-        <button class="btn btn-success btn-lg btn-block">LISÄÄ PYÖRÄ</button>
-    </a>
-
-    </form>
-    <br />
-    <a th:href="@{/vehicles}"
+        <button
+          th:href="${save}"
+          class="btn btn-success btn-lg btn-block"
+          type="submit"
+          th:text="${button}"
+        ></button>
+      </form>
+    </div>
+    <br /><a th:href="@{/vehicles}"
       ><button class="btn btn-primary btn-lg btn-block">
         ALL (BIKES & CARS)
       </button></a
+    >
+    <br />
+    <a th:href="${takaisin}"
+      ><button class="btn btn-warning btn-lg btn-block">TAKAISIN</button></a
     >
   </body>
 </html>

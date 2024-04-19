@@ -10,7 +10,9 @@
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
-  <body>
+  <body
+    style="background-color: rgb(71, 71, 71); color: white; font-weight: bold"
+  >
     <br />
 
     <div class="container">
@@ -31,6 +33,7 @@
         ><button class="btn btn-success btn-lg btn-block">ADD BIKE</button></a
       >
       <tr>
+        <th>id</th>
         <th>Merkki</th>
         <th>Malli</th>
         <th>Kilometrit</th>
@@ -44,6 +47,7 @@
         <th></th>
       </tr>
       <tr th:each="bike : ${bikes}">
+        <td style="padding: 7px" th:text="${bike.vehicle.id}"></td>
         <td style="padding: 7px" th:text="${bike.vehicle.brand}"></td>
         <td style="padding: 7px" th:text="${bike.vehicle.model}"></td>
         <td style="padding: 7px" th:text="${bike.kilometers} + '`km'  "></td>
@@ -101,7 +105,7 @@
       >
         <option
           th:each="merkki : ${brandit}"
-          th:value="${'/bikeinfo/' + merkki}"
+          th:value="${'/bikebybrand/' + merkki}"
           th:text="${merkki}"
         ></option>
       </select>
@@ -114,7 +118,7 @@
       >
         <option
           th:each="merkki : ${rentedbrandit}"
-          th:value="${'/rented/' + merkki}"
+          th:value="${'/brented/' + merkki}"
           th:text="${merkki}"
         ></option>
       </select>
@@ -136,9 +140,5 @@
 
     <br />
     <br />
-
-    <!-- <a th:href="@{/rented}">rented Cars</a>
-    <br><br>
-    <a th:href="@{/notrented}">notrented Cars</a> -->
   </body>
 </html>

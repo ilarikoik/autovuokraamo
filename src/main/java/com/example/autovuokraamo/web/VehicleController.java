@@ -35,11 +35,9 @@ public class VehicleController {
 
     private static final Logger log = LoggerFactory.getLogger(VehicleController.class);
 
-    // se laittaa kaikki ku on eri värisii nii ei oo unique
     @GetMapping("/vehicles")
     public String vehicleList(Model model) {
 
-        /* Iterable<Vehicle> audi = vrepo.findByBrand("audi"); */
         Iterable<Vehicle> audi = vrepo.findByBrand("audi");
 
         Iterable<Vehicle> kaikki = vrepo.findAll();
@@ -48,65 +46,29 @@ public class VehicleController {
             uniqueVehicles.add(ve);
         }
 
-        // uniikit
         Iterable<String> uniqueBrands = vrepo.findAllDistinctBrands();
         model.addAttribute("brands", uniqueBrands);
-
         model.addAttribute("vehicles", uniqueVehicles);
         model.addAttribute("audit", audi);
         return "vehiclelist";
     }
 
-    @GetMapping("/info/{brand}")
-    public String findSameCars(@PathVariable("brand") String brand, Model model) {
-        // hakee vehicle reposta brandin mukaan
-        Iterable<Vehicle> vehiclesByBrand = vrepo.findByBrand(brand);
-
-        List<Car> carslist = new ArrayList<>();
-
-        // käydää brandi lista läpi ja jos carReposta löytyy vehicle nii lisätää listaan
-        for (Vehicle vehicle : vehiclesByBrand) {
-            // tehää lista kaikista jotka osuu
-            List<Car> cars = crepo.findByVehicle(vehicle); // metodi tehty carRepossa, sille annetaan parametrinä tällä
-                                                           // hetkellä loopissa oleva Vehicle
-                                                           // ja ettii reposta matcheja
-                                                           // jos vehicle löytyy reposta nii lisätää koko
-                                                           // auto objekti listaan
-            carslist.addAll(cars);
-        }
-
-        model.addAttribute("autotiedot", carslist); // lähetetää tiedot
-
-        return "infos";
-    }
-
     @GetMapping("/allvehiclesby/{brand}")
     public String findAllVehiclesByBrand(@PathVariable("brand") String brand, Model model) {
 
-        // kaikki vehiclet brandin mukaan url
         List<Vehicle> kaikki = vrepo.findByBrand(brand);
 
         // sekalista autoille ja pyörille
         List<Object> a = new ArrayList<>();
 
         for (Vehicle vehicle : kaikki) {
-
             // haetaa reposta kaikki ne autot/pyörät jotka matchaa brandiin
             List<Bike> bikes = brepo.findByVehicle(vehicle);
             List<Car> cars = crepo.findByVehicle(vehicle);
-
             a.addAll(bikes);
             a.addAll(cars);
         }
-
         model.addAttribute("autotiedot", a);
-
-        /*
-         * for (Object aa : a) {
-         * log.info(aa.toString());
-         * 
-         * }
-         */
 
         log.info("\n \nkaikki tuotteet merkin mukaan");
         for (Object aa : a) {
@@ -116,4 +78,51 @@ public class VehicleController {
         return "infos";
     }
 
+    // merkin perusteella vapaana olevat vehiclet
+    @GetMapping("/notrented/{brand}")
+    public String showNotRentedVehiclesByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
+        model.addAttribute("takaisin", "/cars");
+
+        List<Car> cars = crepo.findByRented(false);
+        List<Object> notRentedList = new ArrayList<>();
+
+        for (Car c : cars) {
+            String currentCarBrand = c.getVehicle().getBrand();
+            if (currentCarBrand.equals(brand)) {
+                notRentedList.add(c);
+            }
+        }
+        for (Bike c : brepo.findByRented(false)) {
+            String currentBikeBrand = c.getVehicle().getBrand();
+            if (currentBikeBrand.equals(brand)) {
+                notRentedList.add(c);
+            }
+        }
+        model.addAttribute("rentedlist", notRentedList);
+        return "rentedbybrand";
+    }
+
+    // merkin perusteella vuokratut vehiclet
+    @GetMapping("/rented/{brand}")
+    public String showRentedVehiclesByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
+        model.addAttribute("takaisin", "/cars");
+
+        List<Car> cars = crepo.findByRented(true);
+        List<Object> rentedList = new ArrayList<>();
+
+        for (Car c : cars) {
+            String currentCarBrand = c.getVehicle().getBrand();
+            if (currentCarBrand.equals(brand)) {
+                rentedList.add(c);
+            }
+        }
+        for (Bike c : brepo.findByRented(true)) {
+            String currentBikeBrand = c.getVehicle().getBrand();
+            if (currentBikeBrand.equals(brand)) {
+                rentedList.add(c);
+            }
+        }
+        model.addAttribute("rentedlist", rentedList);
+        return "rentedbybrand";
+    }
 }

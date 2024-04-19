@@ -23,56 +23,24 @@ public class CarRestController {
     @Autowired
     private CarRepository crepo;
 
-    @Autowired
-    private VehicleRepository vrepo;
-
-    /*
-     * @RequestMapping(value = { ("/carsrest") }, method = RequestMethod.GET)
-     * public @ResponseBody List<Vehicle> vehicleRestList() {
-     * return (List<Vehicle>) vrepo.findAll();
-     * }
-     */
-
-    /*
-     * @RequestMapping(value = { "/car" }, method = RequestMethod.GET)
-     * public @ResponseBody List<Car> carRestListaaaa() {
-     * List<Car> cars = (List<Car>) crepo.findAll();
-     * List<Vehicle> ve = new ArrayList<>();
-     * for (Car car : cars) {
-     * Vehicle vehicle = car.getVehicle();
-     * ve.add(vehicle);
-     * }
-     * 
-     * List<Car> vittu = new ArrayList<>();
-     * for (Car car : cars) {
-     * Car nCar = new Car(car.getFuel(), car.getType(), car.getPrice(),
-     * car.getKilometers(), car.getRented(),
-     * car.getVehicle());
-     * vittu.add(nCar);
-     * }
-     * 
-     * return vittu;
-     * 
-     * }
-     */
-
+    // kaikki autot
     @RequestMapping(value = { "/api/car" }, method = RequestMethod.GET)
     public @ResponseBody List<Car> carRestListaaa() {
         List<Car> cars = (List<Car>) crepo.findAll();
-
         for (Car car : cars) {
             Vehicle vehicle = car.getVehicle();
             car.setVehicle(vehicle);
         }
-
         return cars;
     }
 
+    // vuokratut
     @RequestMapping(value = { ("/api/rented") }, method = RequestMethod.GET)
     public @ResponseBody List<Car> carRestList() {
         return (List<Car>) crepo.findByRented(true);
     }
 
+    // vapaat
     @RequestMapping(value = { ("/api/notrented") }, method = RequestMethod.GET)
     public @ResponseBody List<Car> carNotrentedRestList() {
         return (List<Car>) crepo.findByRented(false);

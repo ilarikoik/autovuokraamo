@@ -37,7 +37,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class CarController {
 
-    // liitä repo
+    private static final Logger log = LoggerFactory.getLogger(CarController.class);
+
     @Autowired
     private CarRepository crepo;
 
@@ -49,22 +50,11 @@ public class CarController {
 
     @GetMapping("/cars")
     public String carList(Model model) {
-        // vehicle tiedot löytyy myös creposta kun ne on tallennettu sinne Car olioon
 
-        Iterable<Car> kaikki = crepo.findAll();
-        List<Car> autot = new ArrayList<>();
-        for (Car car : kaikki) {
-            // poistetaa mopot listasta
-            if (!car.getType().equals("mopo")) {
-                autot.add(car);
-            }
-        }
         model.addAttribute("cars", crepo.findAll());
 
-        // lähetetää kaikki värit valintoja varte
-
+        // Hae autoja värin perusteella
         List<String> colors = new ArrayList<>();
-        // auto reposta vehicle ja sieltä color listaan ettei tuu mopo värejä
         for (Car car : crepo.findAll()) {
             String color = car.getVehicle().getColor();
             if (!colors.contains(color)) {
@@ -73,15 +63,13 @@ public class CarController {
         }
         model.addAttribute("colorlist", colors);
 
-        // lähetetää kaikki merkit valintoja varte
+        // Hae autoja merkin perusteella
         List<String> brandit = new ArrayList<>();
-
         List<String> mopobrandit = new ArrayList<>();
         for (Bike s : brepo.findAll()) {
             String brandi = s.getVehicle().getBrand();
             mopobrandit.add(brandi);
         }
-
         for (Vehicle v : vrepo.findAll()) {
             String bra = v.getBrand();
             if (!brandit.contains(bra)) {
@@ -114,39 +102,55 @@ public class CarController {
         return "carlist";
     }
 
+    // lisätää auto
     @GetMapping("/addcar")
     public String addCar(Model model) {
         model.addAttribute("car", new Car());
+        model.addAttribute("otsikko", "Add Car");
+        model.addAttribute("button", "Add Car");
+        model.addAttribute("save", "/save");
+        model.addAttribute("takaisin", "/cars");
 
-        return "addcar";
+        model.addAttribute("type", "car");
+
+        return "car";
     }
 
     @PostMapping("/save")
-    public String saveCar(@Valid @ModelAttribute Car car, BindingResult br) {
+    public String saveCar(@Valid @ModelAttribute Car car, BindingResult br, Model model) {
+        model.addAttribute("otsikko", "Add Car");
+        model.addAttribute("button", "Add Car");
+        model.addAttribute("save", "/save");
+
         if (br.hasErrors()) {
-            return "addcar";
+            return "car";
         }
-        // pitää tallentaa taas Vehicle eka
+        // pitää tallentaa vehicle ekaks muute errorrrr
         Vehicle ve = car.getVehicle();
         vrepo.save(ve);
         crepo.save(car);
         return "redirect:/cars";
     }
 
+    // eri edit thymeleaffit ku muute menee iha solmuu
     @GetMapping("/editcar/{id}")
     public String editCar(@PathVariable("id") Long carId, Model model) {
-        model.addAttribute("car", crepo.findById(carId));
-        return "editcar";
+        model.addAttribute("bike", crepo.findById(carId));
+        model.addAttribute("otsikko", "Edit Car");
+        model.addAttribute("button", "Updaaaate");
+        model.addAttribute("takaisin", "/cars");
+        model.addAttribute("save", "/save");
+
+        return "car";
     }
 
     @PostMapping("/saverent/{id}")
     public String rentCar(@PathVariable("id") Long id, Model model) {
-        Optional<Car> car = crepo.findById(id); // urlista saadaa id metodille
+        Optional<Car> car = crepo.findById(id); // urlista saadaa id
         if (car.isPresent()) {
-            // jos löytyy haetaa sen tiedot ja vaihetaa rented kohta ja tallennetaa
             Car carRented = car.get();
             boolean rented = carRented.getRented();
-            // vaihdetaan vastakkaiseen booleaniin klikillä
+            // vaihdetaan päinvastaseen booleaniin klikillä
             carRented.setRented(!rented);
             crepo.save(carRented);
         } else {
@@ -161,84 +165,52 @@ public class CarController {
         return "redirect:/cars";
     }
 
+    // kaikki vuokratut autot
     @GetMapping("/rented")
     public String showRentedCars(Boolean rented, Model model) {
-        List<Car> rentedList = crepo.findByRented(true);
+        model.addAttribute("takaisin", "/cars");
 
+        List<Car> rentedList = crepo.findByRented(true);
         model.addAttribute("rentedlist", rentedList);
         return "rentedlist";
 
     }
 
+    // autot merkin perusteella
+    @GetMapping("/info/{brand}")
+    public String findSameCars(@PathVariable("brand") String brand, Model model) {
+        model.addAttribute("takaisin", "/cars");
+
+        List<Car> carslist = new ArrayList<>();
+
+        // ettii reposta merkin perusteella
+        for (Vehicle vehicle : vrepo.findByBrand(brand)) {
+            // jos se vehicle löytyy creposta ni tehää lista
+            List<Car> cars = crepo.findByVehicle(vehicle);
+            carslist.addAll(cars);
+        }
+
+        model.addAttribute("autotiedot", carslist);
+
+        return "infos";
+    }
+
+    // kaikki vuokraamattomat autot
     @GetMapping("/notrented")
     public String showNotRentedCars(Boolean rented, Model model) {
+        model.addAttribute("takaisin", "/cars");
+
         List<Car> notRentedList = crepo.findByRented(false);
-        model.addAttribute("notrentedlist", notRentedList);
-        return "notrentedlist";
+        model.addAttribute("rentedlist", notRentedList);
+        return "rentedlist";
 
     }
 
-    @GetMapping("/notrented/{brand}")
-    public String showNotRentedCarsByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
-        List<Car> cars = crepo.findByRented(false);
-        List<Car> notRentedList = new ArrayList<>();
-
-        for (Car c : cars) {
-            String currentCarBrand = c.getVehicle().getBrand();
-            if (currentCarBrand.equals(brand)) {
-                notRentedList.add(c);
-            }
-        }
-
-        List<Object> bikenotrentedList = new ArrayList<>();
-
-        for (Bike c : brepo.findByRented(true)) {
-            String currentBikeBrand = c.getVehicle().getBrand();
-            if (currentBikeBrand.equals(brand)) {
-                bikenotrentedList.add(c);
-            }
-        }
-
-        model.addAttribute("bikenotrentedlist", bikenotrentedList);
-
-        model.addAttribute("notrentedlist", notRentedList);
-        return "notrentedbybrand";
-
-    }
-
-    @GetMapping("/rented/{brand}")
-    public String showRentedCarsByBrand(@PathVariable("brand") String brand, Boolean rented, Model model) {
-        List<Car> cars = crepo.findByRented(true);
-        List<Object> rentedList = new ArrayList<>();
-
-        for (Car c : cars) {
-            String currentCarBrand = c.getVehicle().getBrand();
-            if (currentCarBrand.equals(brand)) {
-                rentedList.add(c);
-            }
-        }
-        for (Bike c : brepo.findByRented(true)) {
-            String currentBikeBrand = c.getVehicle().getBrand();
-            if (currentBikeBrand.equals(brand)) {
-                rentedList.add(c);
-            }
-        }
-
-        model.addAttribute("notrentedlist", rentedList);
-        return "rentedbybrand";
-
-    }
-
-    private static final Logger log = LoggerFactory.getLogger(CarController.class);
-
+    // autot värin perusteella
     @GetMapping("/bycolor/{color}")
     public String showByColor(@PathVariable("color") String color, Model model) {
+        model.addAttribute("takaisin", "/cars");
 
-        // pitäs hakee eka sen merkin perustellaa creposta ja sitte haravoida sieltä
-        // sama värilliset
-
-        // ottaa urliin annetun color paramterin ja ettii sen nimiset värit Vehicle
-        // listasta
         Set<String> colors = new HashSet<>();
         for (Vehicle v : vrepo.findAll()) {
             String VeColor = v.getColor();
@@ -248,16 +220,11 @@ public class CarController {
 
         List<Car> byColor = new ArrayList<>();
         for (Car car : crepo.findAll()) {
-            // jokasta autoa kohden haetaan sen vehicle luokka ja sieltä väri
             String c = car.getVehicle().getColor();
             if (c.equals(color)) {
                 byColor.add(car);
             }
         }
-
-        // ehkä joteki tällei
-        /* List<Car> lista = crepo.findByVehicle(vrepo.findByColor(color)); */
-
         model.addAttribute("bycolor", byColor);
         return "bycolor";
     }

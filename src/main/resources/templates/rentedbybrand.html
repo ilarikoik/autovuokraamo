@@ -17,17 +17,29 @@
       </button></a
     >
     <br />
+    <a th:href="@{/bikes}"
+      ><button class="btn btn-primary btn-lg btn-block">BIKES</button></a
+    >
+    <br />
     <a th:href="@{/cars}"
       ><button class="btn btn-primary btn-lg btn-block">CARS</button></a
     >
     <br />
-    <a th:href="@{/vehicles}" class="btn btn-warning btn-lg btn-block"
-      >EDELLINEN SIVU
+    <a th:href="${takaisin}" class="btn btn-warning btn-lg btn-block"
+      >TAKAISIN
     </a>
     <br />
   </div>
-  <body>
-    <h3>Rented by brand</h3>
+  <body
+    style="
+      background-color: rgba(151, 151, 151, 0.753);
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+    "
+  >
+    <h3 th:text="${otsikko}"></h3>
+    <h3 th:text="${otsikko2}"></h3>
+
     <table class="table table-striped table-dark">
       <tr>
         <th>Merkki</th>
@@ -39,15 +51,15 @@
         <th>Hinta</th>
         <th>Vuokrattu</th>
       </tr>
-      <tr th:each="notrented : ${notrentedlist}">
-        <td th:text="${notrented.vehicle.brand}"></td>
-        <td th:text="${notrented.vehicle.model}"></td>
-        <td th:text="${notrented.kilometers}"></td>
-        <td th:text="${notrented.vehicle.color}"></td>
-        <td th:text="${notrented.type}"></td>
-        <td th:text="${notrented.fuel}"></td>
-        <td th:text="${notrented.price} +' €'"></td>
-        <td th:text="${notrented.rented} ? 'Kyllä' : 'Ei'"></td>
+      <tr th:each="rented : ${rentedlist}">
+        <td th:text="${rented.vehicle.brand}"></td>
+        <td th:text="${rented.vehicle.model}"></td>
+        <td th:text="${rented.kilometers}"></td>
+        <td th:text="${rented.vehicle.color}"></td>
+        <td th:text="${rented.type}"></td>
+        <td th:text="${rented.fuel}"></td>
+        <td th:text="${rented.price} +' €'"></td>
+        <td th:text="${rented.rented} ? 'Kyllä' : 'Ei'"></td>
       </tr>
     </table>
     <br />

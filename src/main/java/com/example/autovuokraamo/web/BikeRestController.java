@@ -22,15 +22,23 @@ public class BikeRestController {
     @Autowired
     private BikeRepository brepo;
 
+    // kaikki pyörät
     @RequestMapping("/api/bike")
     public @ResponseBody List<Bike> bikeRest() {
         List<Bike> bikes = (List<Bike>) brepo.findAll();
         return (List<Bike>) bikes;
     }
 
-    @RequestMapping("/api/bikenotrented")
+    // vapaat
+    @RequestMapping("/api/bnotrented")
     public @ResponseBody List<Bike> bikeRestNotRented() {
         List<Bike> bikes = (List<Bike>) brepo.findByRented(false);
+        return (List<Bike>) bikes;
+    }
+
+    @RequestMapping("/api/brented")
+    public @ResponseBody List<Bike> bikeRestRented() {
+        List<Bike> bikes = (List<Bike>) brepo.findByRented(true);
         return (List<Bike>) bikes;
     }
 

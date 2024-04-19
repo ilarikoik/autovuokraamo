@@ -28,7 +28,7 @@ public class Bike {
     @Size(max = 6, message = "Max 6 characters!")
     private String type, fuel;
 
-    @Min(value = 1, message = "must be greater than 1")
+    @Min(value = 1, message = " must be greater than 1")
     private int price, kilometers;
 
     @NotNull

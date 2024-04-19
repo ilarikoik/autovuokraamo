@@ -22,19 +22,19 @@ public class VehicleControllerTests {
     private MockMvc mockMvc;
 
     @Test
-    public void carList() throws Exception {
+    public void vehicleList() throws Exception {
         this.mockMvc.perform(get("/vehicles")).andExpect(status().isOk());
     }
 
     @Test
-    public void carListbyColor() throws Exception {
+    public void vehicleListbyColor() throws Exception {
         this.mockMvc.perform(get("/allvehiclesby/Honda")).andExpect(status().isOk());
     }
 
     @Test
-    public void carListContains() throws Exception {
+    public void vehicleListContains() throws Exception {
         this.mockMvc.perform(get("/vehicles")).andExpect(status().isOk())
-                .andExpect(content().string(containsString("vehicles by brand")))
+                .andExpect(content().string(containsString("Vehicles by Brand")))
                 .andExpect(content().string(
                         containsString("Merkki")));
     }

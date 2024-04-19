@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/css/css/bootstrap.min.css"
+      th:href="@{/css/css/bootstrap.min.css}"
+    />
+    <title>CarRental</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body
+    style="background-color: rgb(71, 71, 71); color: white; font-weight: bold"
+  >
+    <h3 th:text="${otsikko}"></h3>
+    <div style="text-align: left">
+      <form
+        action="${save}"
+        method="post"
+        th:action="${save}"
+        th:object="${car}"
+      >
+        <input type="hidden" th:field="*{carId}" />
+        <input
+          th:text="brand"
+          type="text"
+          placeholder="brand"
+          th:field="*{vehicle.brand}"
+          required
+        />
+        <span
+          th:if="${#fields.hasErrors('vehicle.brand')}"
+          th:errors="*{vehicle.brand}"
+          >Error</span
+        >
+        <br /><input
+          th:text="model"
+          type="text"
+          placeholder="model"
+          th:field="*{vehicle.model}"
+          required
+        />
+        <span
+          th:if="${#fields.hasErrors('vehicle.model')}"
+          th:errors="*{vehicle.model}"
+          >Error</span
+        >
+        <br /><input
+          th:text="kilometers"
+          type="number"
+          th:field="*{kilometers}"
+          placeholder="km"
+          required
+        /><span
+          th:if="${#fields.hasErrors('kilometers')}"
+          th:errors="*{kilometers}"
+          >Error</span
+        >
+        <br /><input
+          th:text="color"
+          type="text"
+          th:field="*{vehicle.color}"
+          placeholder="color"
+          required
+        /><span
+          th:if="${#fields.hasErrors('vehicle.color')}"
+          th:errors="*{vehicle.color}"
+          >Error</span
+        >
+        <br /><input
+          th:text="price"
+          type="number"
+          th:field="*{price}"
+          placeholder="price"
+          required
+        />
+        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+          >Error</span
+        >
+        <br />
+        <input
+          th:text="Car"
+          type="text"
+          th:field="*{type}"
+          placeholder="type"
+          required
+        />
+        <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"
+          >Error</span
+        >
+
+        <br /><input
+          th:text="fuel"
+          type="text"
+          th:field="*{fuel}"
+          placeholder="fuel"
+          required
+        />
+        <span th:if="${#fields.hasErrors('fuel')}" th:errors="*{fuel}"
+          >Error</span
+        >
+        <br />
+        <label for="">Vuokrattu</label>
+        <select th:field="*{rented}">
+          <option value="true">Kyllä</option>
+          <option value="false">Ei</option>
+        </select>
+        <br />
+        <br />
+        <button
+          th:href="${save}"
+          class="btn btn-success btn-lg btn-block"
+          type="submit"
+          th:text="${button}"
+        ></button>
+      </form>
+    </div>
+    <br /><a th:href="@{/vehicles}"
+      ><button class="btn btn-primary btn-lg btn-block">
+        ALL (BIKES & CARS)
+      </button></a
+    >
+    <br />
+    <a th:href="${takaisin}"
+      ><button class="btn btn-warning btn-lg btn-block">TAKAISIN</button></a
+    >
+  </body>
+</html>

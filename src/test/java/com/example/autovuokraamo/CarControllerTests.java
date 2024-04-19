@@ -58,7 +58,7 @@ public class CarControllerTests {
     @Test
     public void carListContains() throws Exception {
         this.mockMvc.perform(get("/cars")).andExpect(status().isOk())
-                .andExpect(content().string(containsString("cars")))
+                .andExpect(content().string(containsString("CARS")))
                 .andExpect(content().string(containsString("Hae vapaana olevat autot merkin mukaan")))
                 .andExpect(content().string(containsString("Hae vuokrattu/vuokraamaton")))
                 .andExpect(content().string(containsString("Malli")))
