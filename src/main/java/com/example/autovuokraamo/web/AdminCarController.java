@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
-public class CarController {
+public class AdminCarController {
 
     private static final Logger log = LoggerFactory.getLogger(CarController.class);
 
@@ -49,10 +49,12 @@ public class CarController {
 
     private BikeRepository brepo;
 
-    @GetMapping("/cars")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin/cars")
     public String carList(Model model) {
 
-        model.addAttribute("cars", crepo.findByRented(false));
+        model.addAttribute("cars", crepo.findAll());
+
         // Hae autoja värin perusteella
         List<String> colors = new ArrayList<>();
         for (Car car : crepo.findAll()) {
@@ -99,12 +101,58 @@ public class CarController {
         }
         model.addAttribute("notrentedbrandit", notrentedbrandit);
 
-        return "carlist";
+        return "carsadmin";
     }
 
-    @PostMapping("/saverent/{id}")
+    // lisätää auto
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/addcar")
+    public String addCar(Model model) {
+        model.addAttribute("car", new Car());
+        model.addAttribute("otsikko", "Add Car");
+        model.addAttribute("button", "Add Car");
+        model.addAttribute("save", "/save");
+        model.addAttribute("takaisin", "/cars");
+
+        model.addAttribute("type", "car");
+
+        return "car";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/save")
+    public String saveCar(@Valid @ModelAttribute Car car, BindingResult br, Model model) {
+        model.addAttribute("otsikko", "Add Car");
+        model.addAttribute("button", "Add Car");
+        model.addAttribute("save", "/save");
+
+        if (br.hasErrors()) {
+            return "car";
+        }
+        // pitää tallentaa vehicle ekaks muute error
+        Vehicle ve = car.getVehicle();
+        vrepo.save(ve);
+        crepo.save(car);
+        return "redirect:/admin/cars";
+    }
+
+    // eri edit thymeleaffit ku muute menee iha solmuu
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/editcar/{id}")
+    public String editCar(@PathVariable("id") Long carId, Model model) {
+        model.addAttribute("car", crepo.findById(carId));
+        model.addAttribute("otsikko", "Edit Car");
+        model.addAttribute("button", "Update");
+        model.addAttribute("takaisin", "/cars");
+        model.addAttribute("save", "/save");
+
+        return "car";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/adminsaverent/{id}")
     public String rentCar(@PathVariable("id") Long id, Model model) {
-        Optional<Car> car = crepo.findById(id);
+        Optional<Car> car = crepo.findById(id); // urlista saadaa id
         if (car.isPresent()) {
             Car carRented = car.get();
             boolean rented = carRented.getRented();
@@ -114,71 +162,24 @@ public class CarController {
         } else {
             System.err.println("error");
         }
-        return "redirect:/cars";
+        return "redirect:/admin/cars";
     }
 
-    // kaikki vuokratut autot
-    @GetMapping("/rented")
-    public String showRentedCars(Boolean rented, Model model) {
-        model.addAttribute("takaisin", "/cars");
-
-        List<Car> rentedList = crepo.findByRented(true);
-        model.addAttribute("rentedlist", rentedList);
-        return "rentedlist";
-
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/deletecar/{id}")
+    public String deleteCar(@PathVariable("id") Long carId) {
+        crepo.deleteById(carId);
+        return "redirect:/admin/cars";
     }
 
-    // autot merkin perusteella
-    @GetMapping("/info/{brand}")
-    public String findSameCars(@PathVariable("brand") String brand, Model model) {
-        model.addAttribute("takaisin", "/cars");
-
-        List<Car> carslist = new ArrayList<>();
-
-        // ettii reposta merkin perusteella
-        for (Vehicle vehicle : vrepo.findByBrand(brand)) {
-            // jos se vehicle löytyy creposta ni tehää lista
-            List<Car> cars = crepo.findByVehicle(vehicle);
-            carslist.addAll(cars);
-        }
-
-        model.addAttribute("autotiedot", carslist);
-
-        return "bybrand";
-    }
-
-    // kaikki vuokraamattomat autot
-    @GetMapping("/notrented")
-    public String showNotRentedCars(Boolean rented, Model model) {
-        model.addAttribute("takaisin", "/cars");
-
-        List<Car> notRentedList = crepo.findByRented(false);
-        model.addAttribute("rentedlist", notRentedList);
-        return "rentedlist";
-
-    }
-
-    // autot värin perusteella
-    @GetMapping("/bycolor/{color}")
-    public String showByColor(@PathVariable("color") String color, Model model) {
-        model.addAttribute("takaisin", "/cars");
-
-        Set<String> colors = new HashSet<>();
-        for (Vehicle v : vrepo.findAll()) {
-            String VeColor = v.getColor();
-            if (VeColor.equalsIgnoreCase(color))
-                colors.add(VeColor);
-        }
-
-        List<Car> byColor = new ArrayList<>();
+    @GetMapping("/resetallcars")
+    public String resetCars() {
+        List<Car> reset = new ArrayList<>();
         for (Car car : crepo.findAll()) {
-            String c = car.getVehicle().getColor();
-            if (c.equals(color)) {
-                byColor.add(car);
-            }
+            car.setRented(false);
         }
-        model.addAttribute("bycolor", byColor);
-        return "bycolor";
+        crepo.saveAll(reset);
+        return "redirect:/admin/cars";
     }
 
 }

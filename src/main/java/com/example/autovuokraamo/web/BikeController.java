@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,10 +39,10 @@ public class BikeController {
     @Autowired
     private VehicleRepository vrepo;
 
-    @GetMapping(value = { ("/bikes") })
-    public String getBikes(Model model) {
-
-        model.addAttribute("bikes", brepo.findAll());
+    // user bikes sivu
+    @GetMapping("/bikes")
+    public String bikesUser(Model model) {
+        model.addAttribute("bikes", brepo.findByRented(false));
 
         // Hae mopoja värin perusteella
         List<String> bikecolors = new ArrayList<>();
@@ -81,59 +82,9 @@ public class BikeController {
         return "bikes";
     }
 
-    // eri thymeleaffit car ja bike muute iha solmussa
-    @GetMapping("/addbike")
-    public String addBike(Model model) {
-        model.addAttribute("bike", new Bike());
-        model.addAttribute("otsikko", "Add Bike");
-        model.addAttribute("button", "Add Bike");
-        model.addAttribute("save", "/savebike");
-        model.addAttribute("takaisin", "/bikes");
-
-        model.addAttribute("vehicletype", "Bike");
-
-        return "bike";
-    }
-
-    @GetMapping("/deletebike/{id}")
-    public String deleteBike(@PathVariable("id") Long bikeId) {
-        brepo.deleteById(bikeId);
-        return "redirect:/bikes";
-    }
-
-    @GetMapping("/editbike/{id}")
-    public String editBike(@PathVariable("id") Long bikeId, Model model) {
-        model.addAttribute("bike", brepo.findById(bikeId));
-
-        model.addAttribute("otsikko", "Edit Bike");
-        model.addAttribute("button", "Update");
-        model.addAttribute("takaisin", "/bikes");
-        model.addAttribute("save", "/savebike");
-        model.addAttribute("id", "bikdeId");
-        return "bike";
-    }
-
-    @PostMapping("/savebike")
-    public String saveBike(@Valid @ModelAttribute Bike bike, BindingResult br, Model model) {
-        model.addAttribute("otsikko", "Edit Bike");
-        model.addAttribute("button", "Update");
-        model.addAttribute("vehicletype", "BBIKKE");
-
-        if (br.hasErrors()) {
-            return "bike";
-        }
-
-        // pitää tallentaa taas Vehicle eka
-        Vehicle ve = bike.getVehicle();
-        vrepo.save(ve);
-        brepo.save(bike);
-
-        return "redirect:/bikes";
-    }
-
     // varaa pyörä / true => !true
     @PostMapping("/rentbike/{id}")
-    public String rentBike(@PathVariable("id") Long bikeId, Model model) {
+    public String rentBikeUser(@PathVariable("id") Long bikeId, Model model) {
         Optional<Bike> bike = brepo.findById(bikeId);
         if (bike.isPresent()) {
             Bike bikere = bike.get();
@@ -142,7 +93,6 @@ public class BikeController {
             brepo.save(bikere);
         }
         return "redirect:/bikes";
-
     }
 
     // värin perusteella
@@ -202,7 +152,7 @@ public class BikeController {
         for (Bike bike : mopot) {
             System.out.println(bike.toString());
         }
-        return "infos";
+        return "bybrand";
     }
 
     // vapaana olevat pyörät merkin perusteella

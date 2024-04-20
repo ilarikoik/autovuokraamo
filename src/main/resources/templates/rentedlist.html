@@ -10,11 +10,14 @@
     <title>Rental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
+  <form th:action="@{/logout}" method="post">
+    <button type="submit" value="Sign Out" class="btn btn-danger btn-block">
+      Sign Out
+    </button>
+  </form>
   <div class="container">
-    <a th:href="@{/vehicles}"
-      ><button class="btn btn-primary btn-lg btn-block">
-        ALL (BIKES & CARS)
-      </button></a
+    <a th:href="@{/}"
+      ><button class="btn btn-primary btn-lg btn-block">HOME</button></a
     >
     <br />
     <a th:href="@{/bikes}"
@@ -25,9 +28,6 @@
       ><button class="btn btn-primary btn-lg btn-block">CARS</button></a
     >
     <br />
-    <a th:href="${takaisin}"
-      ><button class="btn btn-warning btn-lg btn-block">Takaisin</button></a
-    >
   </div>
   <body
     style="background-color: rgb(71, 71, 71); color: white; font-weight: bold"

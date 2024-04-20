@@ -10,11 +10,15 @@
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
+  <form th:action="@{/logout}" method="post">
+    <button type="submit" value="Sign Out" class="btn btn-danger btn-block">
+      Sign Out
+    </button>
+  </form>
+  <br />
   <div class="container">
-    <a th:href="@{/vehicles}"
-      ><button class="btn btn-primary btn-lg btn-block">
-        ALL (BIKES & CARS)
-      </button></a
+    <a th:href="@{/}"
+      ><button class="btn btn-primary btn-lg btn-block">HOME</button></a
     >
     <br />
     <a th:href="@{/bikes}"
@@ -24,10 +28,7 @@
     <a th:href="@{/cars}"
       ><button class="btn btn-primary btn-lg btn-block">CARS</button></a
     >
-    <br />
-    <a th:href="${takaisin}" class="btn btn-warning btn-lg btn-block"
-      >TAKAISIN
-    </a>
+
     <br />
   </div>
   <body

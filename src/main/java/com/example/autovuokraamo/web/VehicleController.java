@@ -35,21 +35,11 @@ public class VehicleController {
 
     private static final Logger log = LoggerFactory.getLogger(VehicleController.class);
 
-    @GetMapping("/vehicles")
+    @GetMapping("/")
     public String vehicleList(Model model) {
-
-        Iterable<Vehicle> audi = vrepo.findByBrand("audi");
-
-        Iterable<Vehicle> kaikki = vrepo.findAll();
-        Set<Vehicle> uniqueVehicles = new HashSet<>();
-        for (Vehicle ve : kaikki) {
-            uniqueVehicles.add(ve);
-        }
 
         Iterable<String> uniqueBrands = vrepo.findAllDistinctBrands();
         model.addAttribute("brands", uniqueBrands);
-        model.addAttribute("vehicles", uniqueVehicles);
-        model.addAttribute("audit", audi);
         return "vehiclelist";
     }
 
@@ -75,7 +65,7 @@ public class VehicleController {
             System.out.println(aa.toString());
         }
 
-        return "infos";
+        return "bybrand";
     }
 
     // merkin perusteella vapaana olevat vehiclet

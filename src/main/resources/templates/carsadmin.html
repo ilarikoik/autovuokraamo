@@ -13,28 +13,17 @@
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
-  <form
-    sec:authorize="!hasRole('ROLE_ANONYMOUS')"
-    th:action="@{/logout}"
-    method="post"
-  >
+  <form th:action="@{/logout}" method="post">
     <button type="submit" value="Sign Out" class="btn btn-danger btn-block">
       Sign Out
     </button>
   </form>
-  <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-    <form th:action="@{/login}" method="post">
-      <button type="submit" value="Sign In" class="btn btn-success btn-block">
-        Sign In
-      </button>
-    </form>
-  </div>
-  <br />
+  <h1>Hello <span sec:authentication="name"></span>!</h1>
   <div
     sec:authorize="hasRole('ADMIN')"
     style="
       text-align: center;
-      background-color: rgba(99, 99, 99, 0.418);
+      background-color: rgba(68, 68, 68, 0.418);
       width: fit-content;
       margin: 0 auto;
       align-items: center;
@@ -42,10 +31,8 @@
     "
   >
     <p>This text is only visible to users with the role of "ADMIN".</p>
-    <a th:href="@{/admin/cars}" class="btn btn-primary">CARRS (ADMIN)</a>
     <a th:href="@{/admin/bikes}" class="btn btn-primary">BIKES (ADMIN)</a>
   </div>
-  <br />
   <body
     style="
       background-color: rgba(151, 151, 151, 0.753);
@@ -59,9 +46,13 @@
       <br />
       <a th:href="@{/bikes}" class="btn btn-primary btn-lg btn-block">Bikes</a>
     </div>
-    <h3 style="text-align: center; margin-top: 50px">Rent Car</h3>
+    <h3 style="text-align: center; margin-top: 50px">All Cars</h3>
+    <br />
     <table class="table table-striped">
       <thead class="thead-dark">
+        <a th:href="@{/addcar}"
+          ><button class="btn btn-success btn-lg btn-block">ADD CAR</button></a
+        >
         <tr>
           <th>Merkki</th>
           <th>Malli</th>
@@ -72,10 +63,14 @@
           <th>Hinta</th>
           <th>Vuokrattu</th>
           <th></th>
+          <th>
+            <a href="/resetallcars">reset kaikki (Vuokrattu -> vapaa)</a>
+          </th>
           <th></th>
           <th></th>
         </tr>
       </thead>
+
       <tr th:each="car : ${cars}">
         <td style="padding: 7px" th:text="${car.vehicle.brand}"></td>
         <td style="padding: 7px" th:text="${car.vehicle.model}"></td>
@@ -85,11 +80,19 @@
         <td style="padding: 7px" th:text="${car.type}"></td>
         <td style="padding: 7px" th:text="${car.price} +' €'"></td>
         <td style="padding: 7px" th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
-        <form th:action="@{/saverent/{id}(id=${car.carId})}" method="post">
+        <form th:action="@{/adminsaverent/{id}(id=${car.carId})}" method="post">
           <td>
             <button type="submit" class="btn btn-warning">VUOKRAA</button>
           </td>
         </form>
+        <td>
+          <a th:href="@{/editcar/{id}(id=${car.carId})}"
+            ><button class="btn btn-primary">EDIT</button>
+          </a>
+          <a th:href="@{/deletecar/{id}(id=${car.carId})}"
+            ><button class="btn btn-danger">DELETE</button>
+          </a>
+        </td>
       </tr>
     </table>
     <div style="text-align: center">
