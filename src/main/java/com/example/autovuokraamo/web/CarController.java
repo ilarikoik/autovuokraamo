@@ -125,7 +125,7 @@ public class CarController {
         if (br.hasErrors()) {
             return "car";
         }
-        // pitää tallentaa vehicle ekaks muute errorrrr
+        // pitää tallentaa vehicle ekaks muute error
         Vehicle ve = car.getVehicle();
         vrepo.save(ve);
         crepo.save(car);
@@ -135,9 +135,9 @@ public class CarController {
     // eri edit thymeleaffit ku muute menee iha solmuu
     @GetMapping("/editcar/{id}")
     public String editCar(@PathVariable("id") Long carId, Model model) {
-        model.addAttribute("bike", crepo.findById(carId));
+        model.addAttribute("car", crepo.findById(carId));
         model.addAttribute("otsikko", "Edit Car");
-        model.addAttribute("button", "Updaaaate");
+        model.addAttribute("button", "Update");
         model.addAttribute("takaisin", "/cars");
         model.addAttribute("save", "/save");
 

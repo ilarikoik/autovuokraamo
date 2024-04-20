@@ -23,6 +23,7 @@
       >
         <input type="hidden" th:field="*{carId}" />
         <input
+          maxlength="20"
           th:text="brand"
           type="text"
           placeholder="brand"
@@ -35,6 +36,7 @@
           >Error</span
         >
         <br /><input
+          maxlength="20"
           th:text="model"
           type="text"
           placeholder="model"
@@ -58,6 +60,7 @@
           >Error</span
         >
         <br /><input
+          maxlength="10"
           th:text="color"
           type="text"
           th:field="*{vehicle.color}"
@@ -79,33 +82,29 @@
           >Error</span
         >
         <br />
-        <input
-          th:text="Car"
-          type="text"
-          th:field="*{type}"
-          placeholder="type"
-          required
-        />
+        <select name="" id="" th:field="*{type}">
+          <option value="auto" th:text="car"></option>
+        </select>
         <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"
           >Error</span
         >
 
-        <br /><input
-          th:text="fuel"
-          type="text"
-          th:field="*{fuel}"
-          placeholder="fuel"
-          required
-        />
+        <br /><select th:field="*{fuel}">
+          <option value="bensa">Bensa</option>
+          <option value="diesel">Diesel</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="Sähkö">Sähkö</option>
+        </select>
+        <label for="">polttoaine</label>
         <span th:if="${#fields.hasErrors('fuel')}" th:errors="*{fuel}"
           >Error</span
         >
         <br />
-        <label for="">Vuokrattu</label>
         <select th:field="*{rented}">
           <option value="true">Kyllä</option>
           <option value="false">Ei</option>
         </select>
+        <label for="">Vuokrattu</label>
         <br />
         <br />
         <button
