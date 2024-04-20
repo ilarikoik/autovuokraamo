@@ -21,40 +21,51 @@
       font-weight: bold;
     "
   >
-    <form
-      sec:authorize="!hasRole('ROLE_ANONYMOUS')"
-      th:action="@{/logout}"
-      method="post"
-    >
-      <button type="submit" value="Sign Out" class="btn btn-danger btn-block">
-        Sign Out
-      </button>
-    </form>
-    <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-      <form th:action="@{/login}" method="post">
-        <button type="submit" value="Sign In" class="btn btn-success btn-block">
-          Sign In
-        </button>
-      </form>
-    </div>
-    <h1>Hello <span sec:authentication="name"></span>!</h1>
-
     <div
-      sec:authorize="hasRole('ADMIN')"
       style="
-        text-align: center;
-        background-color: rgba(68, 68, 68, 0.418);
-        width: fit-content;
-        margin: 0 auto;
-        align-items: center;
-        border-radius: 10px;
+        background-image: url('https://photos.smugmug.com/Wallpapers/i-6zRVZZm/0/ce181b03/X2/HDRshooter-super-ultra-wide-wallpaper-068-X2.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
       "
     >
-      <p>This text is only visible to users with the role of "ADMIN".</p>
-      <a th:href="@{/admin/cars}" class="btn btn-primary">CARRS (ADMIN)</a>
-      <a th:href="@{/admin/bikes}" class="btn btn-primary">BIKES (ADMIN)</a>
-    </div>
-    <table class="table table-striped table-dark">
+      <form
+        sec:authorize="!hasRole('ROLE_ANONYMOUS')"
+        th:action="@{/logout}"
+        method="post"
+      >
+        <button type="submit" value="Sign Out" class="btn btn-danger btn-block">
+          Sign Out
+        </button>
+      </form>
+      <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+        <form th:action="@{/login}" method="post">
+          <button
+            type="submit"
+            value="Sign In"
+            class="btn btn-success btn-block"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <h1>Hello <span sec:authentication="name"></span>!</h1>
+      </div>
+      <br />
+      <div
+        sec:authorize="hasRole('ADMIN')"
+        style="
+          text-align: center;
+          background-color: rgba(16, 32, 85, 0.418);
+          width: fit-content;
+          margin: 0 auto;
+          align-items: center;
+          border-radius: 10px;
+        "
+      >
+        <p>This text is only visible to users with the role of "ADMIN".</p>
+        <a th:href="@{/admin/cars}" class="btn btn-primary">CARRS (ADMIN)</a>
+        <a th:href="@{/admin/bikes}" class="btn btn-primary">BIKES (ADMIN)</a>
+      </div>
       <br />
       <div class="container">
         <br />
@@ -69,6 +80,8 @@
         >
       </div>
       <h3 style="text-align: center; margin-top: 50px">Vehicles by Brand</h3>
+    </div>
+    <table class="table table-striped table-dark">
       <tr>
         <th></th>
         <th>Merkki</th>
