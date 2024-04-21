@@ -172,6 +172,7 @@ public class AdminCarController {
         return "redirect:/admin/cars";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/resetallcars")
     public String resetCars() {
         List<Car> reset = new ArrayList<>();

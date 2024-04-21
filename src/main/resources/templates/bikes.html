@@ -6,6 +6,7 @@
       rel="stylesheet"
       href="/css/css/bootstrap.min.css"
       th:href="@{/css/css/bootstrap.min.css}"
+      style="margin: 0; padding: 0; height: 100%"
     />
     <title>CarRental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -15,15 +16,12 @@
       background-color: rgb(71, 71, 71);
       color: rgb(255, 255, 255);
       font-weight: bold;
+      background-image: url('https://wallpapercave.com/wp/wp3826726.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
     "
   >
-    <div
-      style="
-        background-image: url('https://wallpapercave.com/wp/wp3826726.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-      "
-    >
+    <div>
       <form
         sec:authorize="!hasRole('ROLE_ANONYMOUS')"
         th:action="@{/logout}"
@@ -95,10 +93,26 @@
           <td style="padding: 7px" th:text="${bike.type}"></td>
           <td style="padding: 7px" th:text="${bike.fuel}"></td>
           <td style="padding: 7px" th:text="${bike.price} +' €'"></td>
-          <form th:action="@{/rentbike/{id}(id=${bike.bikeId})}" method="post">
+
+          <form
+            sec:authorize="hasRole('USER')"
+            th:action="@{/rentbike/{id}(id=${bike.bikeId})}"
+            method="post"
+          >
             <td>
               <button type="submit" class="btn btn-warning">VUOKRAA</button>
             </td>
+          </form>
+          <form sec:authorize="hasRole('ADMIN')">
+            <td>
+              <button type="text" class="btn btn-warning">Login as USER</button>
+            </td>
+          </form>
+          <form sec:authorize="hasRole('ROLE_ANONYMOUS')" th:action="@{/login}">
+            <td>
+              <button type="text" class="btn btn-warning">Login to Rent</button>
+            </td>
+            <td></td>
           </form>
           <td></td>
           <td></td>

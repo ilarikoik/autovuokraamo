@@ -131,6 +131,7 @@ public class AdminBikeController {
         return "bike";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/savebike")
     public String saveBike(@Valid @ModelAttribute Bike bike, BindingResult br, Model model) {
         model.addAttribute("otsikko", "Edit Bike");
