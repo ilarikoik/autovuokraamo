@@ -8,7 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
-    // ilma tätä "ulkopuoliset ei pääse tänne näihi localhosteihi tai jtn"
+    // ilma tätä react ei toimi "ulkopuoliset ei pääse tänne näihi localhosteihi tai
+    // jtn"
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
