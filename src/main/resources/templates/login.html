@@ -29,12 +29,24 @@
       ><button class="btn btn-primary btn-lg btn-block">HOME</button></a
     >
     <br />
+    <div
+      style="
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.377);
+        width: fit-content;
+        padding: 15px;
+        margin: auto;
+        border-radius: 10px;
+      "
+    >
+      <p>username: user / admin</p>
+      <p>password: user / admin</p>
+    </div>
     <form th:action="@{/login}" method="post" style="margin-top: 50px">
       <div class="form-group" style="text-align: center" ;>
         <div th:if="${param.error}">Invalid username and password.</div>
-
         <label>
-          User Name : <input type="text" name="username" class="form-control" />
+          Username: <input type="text" name="username" class="form-control" />
         </label>
         <br />
         <label>

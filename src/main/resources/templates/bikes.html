@@ -8,7 +8,7 @@
       th:href="@{/css/css/bootstrap.min.css}"
       style="margin: 0; padding: 0; height: 100%"
     />
-    <title>CarRental</title>
+    <title>Rental</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body
@@ -55,8 +55,10 @@
         "
       >
         <p>This text is only visible to users with the role of "ADMIN".</p>
-        <a th:href="@{/admin/cars}" class="btn btn-primary">CARRS (ADMIN)</a>
-        <a th:href="@{/admin/bikes}" class="btn btn-primary">BIKES (ADMIN)</a>
+        <a th:href="@{/admin/cars}" class="btn btn-primary">CARS (ADMIN)</a>
+        <a th:href="@{/admin/bikes}" class="btn btn-primary"
+          >MOTORCYCLES (ADMIN)</a
+        >
       </div>
       <br />
       <div class="container">
@@ -68,16 +70,17 @@
           ><button class="btn btn-primary btn-lg btn-block">CARS</button></a
         >
       </div>
-      <h3 style="text-align: center; margin-top: 50px">RENT BIKES</h3>
+      <h3 style="text-align: center; margin-top: 50px">RENT MOTORCYCLE</h3>
       <table class="table table-striped">
         <tr style="background-color: rgba(0, 0, 0, 0.705)">
-          <th>Merkki</th>
-          <th>Malli</th>
-          <th>Kilometrit</th>
-          <th>Väri</th>
-          <th>Tyyppi</th>
-          <th>Polttoaine</th>
-          <th>Hinta</th>
+          <th></th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Kilometers</th>
+          <th>Color</th>
+          <th>Vehicle</th>
+          <th>Fuel</th>
+          <th>Price</th>
           <th></th>
           <th></th>
           <th></th>
@@ -86,6 +89,7 @@
           th:each="bike : ${bikes}"
           style="background-color: rgba(61, 61, 61, 0.877); color: white"
         >
+          <td></td>
           <td style="padding: 7px" th:text="${bike.vehicle.brand}"></td>
           <td style="padding: 7px" th:text="${bike.vehicle.model}"></td>
           <td style="padding: 7px" th:text="${bike.kilometers} + '`km'  "></td>

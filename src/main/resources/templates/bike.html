@@ -88,24 +88,24 @@
         >
         <br />
         <select name="" id="" th:field="*{type}">
-          <option value="bike" th:text="bike"></option>
+          <option value="Motorcycle" th:text="Motorcycle"></option>
         </select>
         <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"
           >Error</span
         >
 
         <br /><select th:field="*{fuel}">
-          <option value="bensa">Bensa</option>
+          <option value="Gasoline">Gasoline</option>
         </select>
         <span th:if="${#fields.hasErrors('fuel')}" th:errors="*{fuel}"
           >Error</span
         >
         <br />
-        <label for="">Vuokrattu</label>
         <select th:field="*{rented}">
-          <option value="true">Kyllä</option>
-          <option value="false">Ei</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
         </select>
+        <label for="">Rented</label>
         <br />
         <br />
         <button
@@ -119,7 +119,7 @@
       ><button class="btn btn-primary btn-lg btn-block">HOME</button></a
     >
     <br />
-    <a th:href="${takaisin}"
+    <a th:href="@{/admin/bikes}"
       ><button class="btn btn-warning btn-lg btn-block">TAKAISIN</button></a
     >
   </body>

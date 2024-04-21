@@ -38,7 +38,7 @@
         </button>
       </form>
       <div sec:authorize="hasRole('ROLE_ANONYMOUS')">
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/login}">
           <button
             type="submit"
             value="Sign In"
@@ -64,8 +64,10 @@
         "
       >
         <p>This text is only visible to users with the role of "ADMIN".</p>
-        <a th:href="@{/admin/cars}" class="btn btn-primary">CARRS (ADMIN)</a>
-        <a th:href="@{/admin/bikes}" class="btn btn-primary">BIKES (ADMIN)</a>
+        <a th:href="@{/admin/cars}" class="btn btn-primary">CARS (ADMIN)</a>
+        <a th:href="@{/admin/bikes}" class="btn btn-primary"
+          >MOTORCYCLES (ADMIN)</a
+        >
       </div>
       <br />
       <div class="container">
@@ -73,7 +75,9 @@
 
         <br />
         <a th:href="@{/bikes}"
-          ><button class="btn btn-primary btn-lg btn-block">BIKES</button></a
+          ><button class="btn btn-primary btn-lg btn-block">
+            MOTORCYCLES
+          </button></a
         >
         <br />
         <a th:href="@{/cars}"
@@ -94,7 +98,9 @@
     <table class="table table-striped table-dark">
       <tr>
         <th></th>
-        <th>Merkki</th>
+        <th style="font-size: larger; color: white; text-decoration: underline">
+          Brand
+        </th>
       </tr>
 
       <tr th:each="brand : ${brands}">
@@ -102,13 +108,13 @@
         <td th:text="${brand}"></td>
         <td>
           <a th:href="@{/allvehiclesby/{brand}(brand=${brand})}"
-            ><button class="btn btn-primary">kakki saman merkkiset</button>
+            ><button class="btn btn-primary">ALL by same BRAND</button>
           </a>
           <a th:href="@{/rented/{brand}(brand=${brand})}"
-            ><button class="btn btn-primary">Varattu</button>
+            ><button class="btn btn-primary">Rented</button>
           </a>
           <a th:href="@{/notrented/{brand}(brand=${brand})}"
-            ><button class="btn btn-primary">Vapaat</button>
+            ><button class="btn btn-primary">Not Rented</button>
           </a>
         </td>
       </tr>

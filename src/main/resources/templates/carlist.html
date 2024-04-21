@@ -55,8 +55,10 @@
       "
     >
       <p>This text is only visible to users with the role of "ADMIN".</p>
-      <a th:href="@{/admin/cars}" class="btn btn-primary">CARRS (ADMIN)</a>
-      <a th:href="@{/admin/bikes}" class="btn btn-primary">BIKES (ADMIN)</a>
+      <a th:href="@{/admin/cars}" class="btn btn-primary">CARS (ADMIN)</a>
+      <a th:href="@{/admin/bikes}" class="btn btn-primary"
+        >MOTORCYCLES (ADMIN)</a
+      >
     </div>
     <br />
 
@@ -64,21 +66,23 @@
     <div class="container">
       <a th:href="@{/}" class="btn btn-primary btn-lg btn-block">HOME</a>
       <br />
-      <a th:href="@{/bikes}" class="btn btn-primary btn-lg btn-block">Bikes</a>
+      <a th:href="@{/bikes}" class="btn btn-primary btn-lg btn-block"
+        >MOTORCYCLES</a
+      >
     </div>
     <h3 style="text-align: center; margin-top: 50px; color: white">Rent Car</h3>
 
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>
-          <th>Merkki</th>
-          <th>Malli</th>
-          <th>Kilometrit</th>
-          <th>Väri</th>
-          <th>Polttoaine</th>
-          <th>Tyyppi</th>
-          <th>Hinta</th>
-          <th>Vuokrattu</th>
+          <th></th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Kilometers</th>
+          <th>Color</th>
+          <th>Vehicle</th>
+          <th>Fuel</th>
+          <th>Price</th>
           <th></th>
           <th></th>
           <th></th>
@@ -88,14 +92,14 @@
         th:each="car : ${cars}"
         style="background-color: rgba(209, 209, 209, 0.692)"
       >
+        <td></td>
         <td style="padding: 7px" th:text="${car.vehicle.brand}"></td>
         <td style="padding: 7px" th:text="${car.vehicle.model}"></td>
         <td style="padding: 7px" th:text="${car.kilometers} + '`km'  "></td>
         <td style="padding: 7px" th:text="${car.vehicle.color}"></td>
-        <td style="padding: 7px" th:text="${car.fuel}"></td>
         <td style="padding: 7px" th:text="${car.type}"></td>
+        <td style="padding: 7px" th:text="${car.fuel}"></td>
         <td style="padding: 7px" th:text="${car.price} +' €'"></td>
-        <td style="padding: 7px" th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
         <form
           sec:authorize="hasRole('USER')"
           th:action="@{/saverent/{id}(id=${car.carId})}"
@@ -106,10 +110,12 @@
           </td>
           <td></td>
         </form>
+        <td></td>
         <form sec:authorize="hasRole('ADMIN')">
           <td>
             <button type="text" class="btn btn-warning">Login as USER</button>
           </td>
+          <td></td>
           <td></td>
         </form>
         <form sec:authorize="hasRole('ROLE_ANONYMOUS')" th:action="@{/login}">

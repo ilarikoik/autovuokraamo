@@ -26,7 +26,7 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long carId;
 
-    @Size(max = 6, message = "Max 6 characters!")
+    @Size(max = 10, message = "Max 10 characters!")
     private String type, fuel;
     @Min(value = 1, message = "must be higher than 1")
     private int price, kilometers;

@@ -25,7 +25,7 @@ public class Bike {
 
     @NotBlank(message = "Name is mandatory")
     @NotNull(message = "Name must not be null")
-    @Size(max = 6, message = "Max 6 characters!")
+    @Size(max = 10, message = "Max 10 characters!")
     private String type, fuel;
 
     @Min(value = 1, message = " must be greater than 1")

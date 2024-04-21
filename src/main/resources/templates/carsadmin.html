@@ -44,7 +44,9 @@
     <div class="container">
       <a th:href="@{/}" class="btn btn-primary btn-lg btn-block">HOME</a>
       <br />
-      <a th:href="@{/bikes}" class="btn btn-primary btn-lg btn-block">Bikes</a>
+      <a th:href="@{/bikes}" class="btn btn-primary btn-lg btn-block"
+        >MOTORCYCLES</a
+      >
     </div>
     <h3 style="text-align: center; margin-top: 50px">All Cars</h3>
     <br />
@@ -54,14 +56,16 @@
           ><button class="btn btn-success btn-lg btn-block">ADD CAR</button></a
         >
         <tr>
-          <th>Merkki</th>
-          <th>Malli</th>
-          <th>Kilometrit</th>
-          <th>Väri</th>
-          <th>Polttoaine</th>
-          <th>Tyyppi</th>
-          <th>Hinta</th>
-          <th>Vuokrattu</th>
+          <th></th>
+          <th>id</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Kilometers</th>
+          <th>Color</th>
+          <th>Vehicle</th>
+          <th>Fuel</th>
+          <th>Price</th>
+          <th>Rented</th>
           <th></th>
           <th>
             <a href="/resetallcars">reset kaikki (Vuokrattu -> vapaa)</a>
@@ -72,17 +76,19 @@
       </thead>
 
       <tr th:each="car : ${cars}">
+        <td></td>
+        <td style="padding: 7px" th:text="${car.carId}"></td>
         <td style="padding: 7px" th:text="${car.vehicle.brand}"></td>
         <td style="padding: 7px" th:text="${car.vehicle.model}"></td>
         <td style="padding: 7px" th:text="${car.kilometers} + '`km'  "></td>
         <td style="padding: 7px" th:text="${car.vehicle.color}"></td>
-        <td style="padding: 7px" th:text="${car.fuel}"></td>
         <td style="padding: 7px" th:text="${car.type}"></td>
+        <td style="padding: 7px" th:text="${car.fuel}"></td>
         <td style="padding: 7px" th:text="${car.price} +' €'"></td>
-        <td style="padding: 7px" th:text="${car.rented} ? 'Kyllä' : 'Ei'"></td>
+        <td style="padding: 7px" th:text="${car.rented} ? 'Yes' : 'No'"></td>
         <form th:action="@{/adminsaverent/{id}(id=${car.carId})}" method="post">
           <td>
-            <button type="submit" class="btn btn-warning">VUOKRAA</button>
+            <button type="submit" class="btn btn-warning">RENT CAR</button>
           </td>
         </form>
         <td>
