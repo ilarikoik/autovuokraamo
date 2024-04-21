@@ -104,7 +104,7 @@
             method="post"
           >
             <td>
-              <button type="submit" class="btn btn-warning">VUOKRAA</button>
+              <button type="submit" class="btn btn-warning">RENT NOW</button>
             </td>
           </form>
           <form sec:authorize="hasRole('ADMIN')">
@@ -125,7 +125,7 @@
       <div
         style="text-align: center; background-color: rgba(46, 46, 46, 0.808)"
       >
-        <label for="">Hae mopoja värin perusteella </label>
+        <label for="">Search by Color</label>
         <select
           name=""
           id=""
@@ -138,7 +138,7 @@
             th:text="${color}"
           ></option>
         </select>
-        <label for="">Hae mopoja merkin perusteella </label>
+        <label for="">Search by Brand</label>
         <select
           name=""
           id=""
@@ -151,7 +151,7 @@
             th:text="${merkki}"
           ></option>
         </select>
-        <label for="">Hae vuokrattu/vuokraamaton </label>
+        <label for="">Availability</label>
         <select
           name=""
           id=""
@@ -159,10 +159,10 @@
           style="margin: 10px"
         >
           <option value="">Select...</option>
-          <option value="/brented">vuokrattu</option>
-          <option value="/bnotrented">vuokraamaton</option>
+          <option value="/brented">Rented</option>
+          <option value="/bnotrented">Not Rented</option>
         </select>
-        <label for="">Vuokrattujen merkkien mukaan </label>
+        <label for="">Rented by Brand </label>
         <select
           name=""
           id=""
@@ -176,7 +176,7 @@
           ></option>
         </select>
 
-        <label for="">Hae vapaana olevien merkkin mukaan </label>
+        <label for=""> Available by Brand </label>
         <select
           name=""
           id=""
